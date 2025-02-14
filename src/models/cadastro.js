@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Usuarios = sequelize.define('Usuarios', {
+const Cadastro = sequelize.define('Cadastro', {
     nome: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -22,8 +22,12 @@ const Usuarios = sequelize.define('Usuarios', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    repetir_senha: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     cpf: {
-        type: DataTypes.STRING, // Alterado para STRING
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true,
         validate: {
@@ -36,4 +40,4 @@ const Usuarios = sequelize.define('Usuarios', {
     },
 });
 
-module.exports = Usuarios;
+module.exports = Cadastro;

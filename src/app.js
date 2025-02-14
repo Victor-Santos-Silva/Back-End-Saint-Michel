@@ -1,27 +1,34 @@
-require('dotenv').config(); // Arquivo => .env
+require('dotenv').config(); // Carregar variáveis de ambiente do arquivo .env
 const express = require('express');
-const { sequelize } = require('./models');
-const routes = require('./router/router')
 const cors = require('cors');
+const { sequelize } = require('./models');
+const routes = require('./router/router');
+const loginRoutes = require('./router/loginRotas');
+
 const app = express(); // Iniciando servidor
-app.use(cors())
-app.use(express.json()); // Resposta via JSON
 
+// ✅ Middlewares
+app.use(cors()); // Permitir requisições de outros domínios
+app.use(express.json()); // Permitir JSON no corpo das requisições
+app.use(express.urlencoded({ extended: true })); // Permitir formulários no corpo das requisições
 
-app.use('/api', routes)
+// ✅ Rotas
+app.use('/api/auth', loginRoutes);
+app.use('/api', routes);
 
+// ✅ Testando conexão com o banco de dados
 sequelize.authenticate()
     .then(() => {
-        console.log("Conexao com o banco de dados deu certo.");
+        console.log("Conexão com o banco de dados deu certo.");
     })
     .catch(err => {
         console.log("Erro ao conectar no banco: ", err);
-    })
+    });
 
-const PORT = process.env.PORT || 3000;
-
+// ✅ Iniciando servidor
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log('---------------------------');
-    console.log(`Runnig on http://${PORT}`);
+    console.log(`Runnig on http://localhost:${PORT}`);
     console.log('---------------------------');
 });

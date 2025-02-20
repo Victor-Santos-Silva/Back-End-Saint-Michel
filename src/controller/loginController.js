@@ -15,7 +15,10 @@ const loginController = {
                 return res.status(401).json({ error: 'Credenciais inválidas' });
             }
 
-            res.status(200).json({ message: 'Login realizado com sucesso', usuario });
+            res.status(200).json({
+                message: 'Login realizado com sucesso',
+                username: usuario.nome // Retorna apenas o nome para o frontend
+            });
         } catch (error) {
             console.error('Erro no loginController:', error); // Log para capturar o erro real
             res.status(500).json({ error: 'Erro no servidor.' });

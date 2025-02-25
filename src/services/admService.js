@@ -6,8 +6,10 @@ const admService = {
         try {
             const { nome, email, senha } = cadastro;
 
+            const hashSenha = await bcrypt.hash(senha, 10);
+
             return await Adm.create({
-                nome, email, senha
+                nome, email, senha: hashSenha
             });
         } catch (error) {
             console.error('Erro ao criar Adm:', error);

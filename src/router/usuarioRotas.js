@@ -4,6 +4,8 @@ const router = Router();
 
 router.post('/cadastro', usuarioController.create);
 
+router.post('/login', usuarioController.login)
+
 router.get('/', usuarioController.getAll);
 
 router.get('/:id', usuarioController.getOne);

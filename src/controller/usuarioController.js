@@ -1,5 +1,7 @@
 const usuarioService = require("../services/usuarioService");
 const Usuario = require("../models/Usuario");
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
 
 const usuarioController = {
     login: async (req, res) => {
@@ -55,10 +57,10 @@ const usuarioController = {
     },
     getAll: async (req, res) => {
         try {
-            const cadastro = await usuarioService.getAll();
+            const usuario = await usuarioService.getAll();
             return res.status(200).json({
                 msg: 'Todos os Usuários!',
-                cadastro
+                usuario
             });
         } catch (error) {
             return res.status(500).json({
@@ -68,8 +70,8 @@ const usuarioController = {
     },
     getOne: async (req, res) => {
         try {
-            const cadastro = await usuarioService.getById(req.params.id);
-            if (!cadastro) {
+            const usuario = await usuarioService.getById(req.params.id);
+            if (!usuario) {
                 return res.status(404).json({
                     msg: 'Usuário não encontrado!'
                 });

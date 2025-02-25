@@ -12,14 +12,14 @@ const admController = {
 
             if (!admin) {
                 return res.status(400).json({
-                    msg: "Email ou senha incorretos",
+                    msg: "Email incorreto",
                 });
             }
 
             const isValida = await bcrypt.compare(senha, admin.senha);
             if (!isValida) {
                 return res.status(400).json({
-                    msg: "Email ou senha incorretos",
+                    msg: "Senha incorreta",
                 });
             }
 
@@ -43,7 +43,7 @@ const admController = {
         try {
             const novoCadastroAdm = await admService.create(req.body);
             res.status(201).json({
-                mensagem: 'Usuario criado com sucesso.',
+                mensagem: 'Admin criado com sucesso.',
                 data: novoCadastroAdm
             })
 

@@ -1,13 +1,48 @@
-const cadastroService = require("../services/cadastroService");
+const usuarioService = require("../services/usuarioService");
+const Usuario = require("../models/Usuario");
 
-const cadastroController = {
+const usuarioController = {
+    login: async (req, res) => {
+        try {
+            const { email, senha } = req.body;
+
+            const usuario = await Usuario.findOne({ where: { email } });
+
+            if (!usuario) {
+                return res.status(400).json({
+                    msg: "Email ou senha incorretos",
+                });
+            }
+
+            const isValida = await bcrypt.compare(senha, usuario.senha);
+            if (!isValida) {
+                return res.status(400).json({
+                    msg: "Email ou senha incorretos",
+                });
+            }
+
+            const token = jwt.sign(
+                { email: usuario.email, nome: usuario.nome },
+                process.env.SECRET,
+                { expiresIn: "1h" }
+            );
+
+            return res.status(200).json({
+                msg: "Login realizado",
+                token,
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ msg: "Acione o suporte" });
+        }
+    },
     create: async (req, res) => {
         try {
             const { senha, repetir_senha } = req.body;
             if (senha !== repetir_senha) {
                 return res.status(400).json({ error: 'As senhas não coincidem.' });
             }
-            const novoCadastro = await cadastroService.create(req.body);
+            const novoCadastro = await usuarioService.create(req.body);
             res.status(201).json({ message: 'Usuário cadastrado com sucesso!', data: novoCadastro });
         } catch (error) {
             console.error('Erro no controller:', error.message);
@@ -20,7 +55,7 @@ const cadastroController = {
     },
     getAll: async (req, res) => {
         try {
-            const cadastro = await cadastroService.getAll();
+            const cadastro = await usuarioService.getAll();
             return res.status(200).json({
                 msg: 'Todos os Usuários!',
                 cadastro
@@ -33,7 +68,7 @@ const cadastroController = {
     },
     getOne: async (req, res) => {
         try {
-            const cadastro = await cadastroService.getById(req.params.id);
+            const cadastro = await usuarioService.getById(req.params.id);
             if (!cadastro) {
                 return res.status(404).json({
                     msg: 'Usuário não encontrado!'
@@ -51,4 +86,4 @@ const cadastroController = {
     }
 };
 
-module.exports = cadastroController;
+module.exports = usuarioController;

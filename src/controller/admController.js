@@ -1,32 +1,61 @@
 const admService = require("../services/admService");
+const Admin = require("../models/adm");
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
 
 const admController = {
     login: async (req, res) => {
         try {
-            console.log("📩 Recebendo tentativa de login:", req.body);
-
             const { email, senha } = req.body;
 
-            if (!email || !senha) {
-                return res.status(400).json({ error: "Email e senha são obrigatórios" });
+            const admin = await Admin.findOne({ where: { email } });
+
+            if (!admin) {
+                return res.status(400).json({
+                    msg: "Email ou senha incorretos",
+                });
             }
 
-            const usuario = await admService.autenticar(email, senha);
-
-            if (!usuario) {
-                return res.status(403).json({ error: "Acesso negado! Apenas administradores podem entrar." });
+            const isValida = await bcrypt.compare(senha, admin.senha);
+            if (!isValida) {
+                return res.status(400).json({
+                    msg: "Email ou senha incorretos",
+                });
             }
 
-            res.status(200).json({
-                message: "✅ Login realizado com sucesso",
-                username: usuario.email,
-                isAdmin: usuario.isAdmin,
+            const token = jwt.sign(
+                { email: admin.email, nome: admin.nome },
+                process.env.SECRET,
+                { expiresIn: "1h" }
+            );
+
+            return res.status(200).json({
+                msg: "Login realizado",
+                token,
             });
         } catch (error) {
-            console.error("❌ Erro no admController:", error);
-            res.status(500).json({ error: "Erro no servidor." });
+            console.error(error);
+            return res.status(500).json({ msg: "Acione o suporte" });
         }
     },
+
+    create: async (req, res) => {
+        try {
+            const novoCadastroAdm = await admService.create(req.body);
+            res.status(201).json({
+                mensagem: 'Usuario criado com sucesso.',
+                data: novoCadastroAdm
+            })
+
+        } catch (error) {
+            console.error('Erro no controller:', error.mensagem);
+
+            if (error.name === 'SequelizeValidationError') {
+                return res.status(400).json({ error: 'Erro de validação: ' + error.errors.map(err => err.message).join(', ') });
+            }
+            res.status(500).json({ error: 'Erro interno no servidor.' });
+        }
+    }
 };
 
 module.exports = admController;

@@ -1,7 +1,7 @@
-const Cadastro = require("../models/cadastro");
+const Usuario = require("../models/Usuario");
 const bcrypt = require('bcrypt');
 
-const cadastroService = {
+const usuarioService = {
     create: async (cadastro) => {
         try {
             const { nome, idade, email, senha, repetir_senha, cpf, endereco } = cadastro;
@@ -16,11 +16,11 @@ const cadastroService = {
             const hashRepetirSenha = await bcrypt.hash(repetir_senha, 10);
 
             // Salva os dois campos no banco
-            return await Cadastro.create({ 
-                nome, idade, email, 
-                senha: hashSenha, 
-                repetir_senha: hashRepetirSenha, 
-                cpf, endereco 
+            return await Usuario.create({
+                nome, idade, email,
+                senha: hashSenha,
+                repetir_senha: hashRepetirSenha,
+                cpf, endereco
             });
         } catch (error) {
             console.error('Erro ao criar usuário:', error);
@@ -29,18 +29,18 @@ const cadastroService = {
     },
     getById: async (id) => {
         try {
-            return await Cadastro.findByPk(id);
+            return await Usuario.findByPk(id);
         } catch (error) {
             throw new Error('Erro ao buscar usuário.');
         }
     },
     getAll: async () => {
         try {
-            return await Cadastro.findAll();
+            return await Usuario.findAll();
         } catch (error) {
             throw new Error('Erro ao buscar usuários.');
         }
     }
 };
 
-module.exports = cadastroService;
+module.exports = usuarioService;

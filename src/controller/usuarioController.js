@@ -38,6 +38,7 @@ const usuarioController = {
             return res.status(500).json({ msg: "Acione o suporte" });
         }
     },
+
     create: async (req, res) => {
         try {
             const { senha, repetir_senha } = req.body;
@@ -55,6 +56,7 @@ const usuarioController = {
             res.status(500).json({ error: 'Erro interno no servidor.' });
         }
     },
+
     getAll: async (req, res) => {
         try {
             const usuario = await usuarioService.getAll();
@@ -68,6 +70,7 @@ const usuarioController = {
             });
         }
     },
+
     getOne: async (req, res) => {
         try {
             const usuario = await usuarioService.getById(req.params.id);
@@ -78,7 +81,7 @@ const usuarioController = {
             }
             return res.status(200).json({
                 msg: 'Usuário encontrado',
-                cadastro
+                usuario
             });
         } catch (error) {
             return res.status(500).json({

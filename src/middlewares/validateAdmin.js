@@ -13,7 +13,6 @@ const validateAdmin = (req, res, next) => {
         return res.status(400).json({ msg: 'Campos inválidos.' });
     }
 
-
     if (!(email.includes("@") && email.includes("."))) {
         return res.status(400).json({ msg: 'Campo email invalido.' })
     }

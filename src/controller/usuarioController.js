@@ -24,7 +24,7 @@ const usuarioController = {
             }
 
             const token = jwt.sign(
-                { email: usuario.email, nome: usuario.nome },
+                { email: usuario.email, nome: usuario.nomeCompleto },
                 process.env.SECRET,
                 { expiresIn: "1h" }
             );
@@ -32,7 +32,7 @@ const usuarioController = {
             return res.status(200).json({
                 msg: "Login realizado",
                 token,
-                usuario: usuario.nome
+                usuario: usuario.nomeCompleto
             });
         } catch (error) {
             console.error(error);
@@ -42,10 +42,6 @@ const usuarioController = {
 
     create: async (req, res) => {
         try {
-            const { senha, repetir_senha } = req.body;
-            if (senha !== repetir_senha) {
-                return res.status(400).json({ error: 'As senhas não coincidem.' });
-            }
             const novoCadastro = await usuarioService.create(req.body);
             res.status(201).json({ message: 'Usuário cadastrado com sucesso!', data: novoCadastro });
         } catch (error) {

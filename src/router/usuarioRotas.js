@@ -1,7 +1,6 @@
 const { Router } = require("express");
-const usuarioController = require("../controller/usuarioController.js");
-const authenticateToken = require("../middlewares/authenticateToken.js");
 const router = Router();
+const usuarioController = require("../controller/usuarioController.js");
 
 router.post('/cadastro', usuarioController.create);
 

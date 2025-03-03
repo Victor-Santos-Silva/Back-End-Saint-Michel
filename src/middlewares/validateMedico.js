@@ -6,10 +6,10 @@ const validateMedico = (req, res, next) => {
         return res.status(400).json({ msg: 'CRM inválido! Deve ser uma string não vazia.' });
     }
 
-    // Validação da senha
+    /* // Validação da senha
     if (!senha || typeof senha !== 'string' || senha.length < 6) {
         return res.status(400).json({ msg: 'Senha deve ter pelo menos 6 caracteres.' });
-    }
+    } */
 
     next();
 };

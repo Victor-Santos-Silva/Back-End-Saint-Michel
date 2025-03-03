@@ -17,6 +17,13 @@ const Usuario = sequelize.define('Usuario', {
         validate: {
             len: [11, 11], // Garante 11 caracteres
             isNumeric: true, // Apenas números
+            // Regex para garantir o formato do CPF
+            isCpfValid(value) {
+                const regex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+                if (!regex.test(value)) {
+                    throw new Error('Formato de CPF inválido. Exemplo: 123.456.789-00');
+                }
+            }
         },
     },
     rg: {
@@ -36,6 +43,7 @@ const Usuario = sequelize.define('Usuario', {
         allowNull: false,
         validate: {
             len: [10, 11], // Valida telefone fixo (10) ou celular (11)
+            isNumeric: true, // Apenas números
         },
     },
     convenioMedico: {
@@ -62,6 +70,8 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING, // Tipo STRING para armazenar o nome ou caminho da imagem
         allowNull: true, // Permite que seja nulo (caso o gênero não tenha uma imagem associada)
     }
+}, {
+    timestamps: true, // Adiciona createdAt e updatedAt automaticamente
 });
 
 module.exports = Usuario;

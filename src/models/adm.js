@@ -9,7 +9,12 @@ const AdmModel = sequelize.define("Adm", {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
+        validate: {
+            isEmail: {
+                msg: 'E-mail inválido'
+            }
+        }
     },
     senha: {
         type: DataTypes.STRING,

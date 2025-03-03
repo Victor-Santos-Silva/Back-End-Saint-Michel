@@ -29,12 +29,17 @@ const Medico = sequelize.define("Medico", {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+        validate: {
+            // Exemplo de regex para CRM: '123456/SP'
+            is: { args: /^[0-9]{6}\/[A-Z]{2}$/, msg: 'CRM inválido! Formato correto: 123456/SP' }
+        },
     },
     telefone: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
             len: { args: [10, 11], msg: "O telefone deve ter 10 ou 11 dígitos." },
+            isNumeric: { msg: "O telefone deve conter apenas números." },
         },
     },
     endereco: {

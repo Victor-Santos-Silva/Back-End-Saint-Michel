@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const admController = require("../controller/admController");
-const { validateAdmin, validadeAdminId } = require("../middlewares/validateAdmin")
+const { validateAdmin, validateAdminId } = require("../middlewares/validateAdmin")
 const authenticateToken = require("../middlewares/authenticateToken.js");
 const router = Router();
 
@@ -15,16 +15,16 @@ router.post("/cadastro", validateAdmin, admController.create);
 router.get('/', authenticateToken, admController.getAll);
 
 // funcao buscar unico
-router.get('/:id', authenticateToken, validadeAdminId, admController.getOne);
+router.get('/:id', authenticateToken, validateAdminId, admController.getOne);
 
 // funcao de editar ADM
-router.put('/:id', authenticateToken, validateAdmin, validadeAdminId, admController.update);
+router.put('/:id', authenticateToken, validateAdmin, validateAdminId, admController.update);
 
 //funçao de esqueci senha
-router.put('/:id', authenticateToken, validateAdmin, validadeAdminId, admController.esqueciSenha)
+router.put('/:id', authenticateToken, validateAdmin, validateAdminId, admController.esqueciSenha)
 
 // funcao de deletar
-router.delete('/:id', authenticateToken, validadeAdminId, admController.delete);
+router.delete('/:id', authenticateToken, validateAdminId, admController.delete);
 
 
 module.exports = router;

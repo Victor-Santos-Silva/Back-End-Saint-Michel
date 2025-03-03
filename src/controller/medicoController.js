@@ -2,7 +2,6 @@ const medicoService = require("../services/medicoService");
 const Medico = require("../models/medico");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const upload = require("../config/uploadConfig"); // Configuração para upload de arquivos
 
 const medicoController = {
     login: async (req, res) => {
@@ -44,7 +43,7 @@ const medicoController = {
         try {
             const { nome_completo, idade, cpf, crm, telefone, endereco, especialidade, nacionalidade, email_corporativo, senha_corporativa } = req.body;
 
-            // Caminho da imagem (se foi enviada)
+            // Verifica se o multer salvou o arquivo corretamente
             const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
             const novoCadastroMedico = await medicoService.create({
@@ -68,12 +67,6 @@ const medicoController = {
 
         } catch (error) {
             console.error("Erro ao criar médico:", error);
-
-            if (error.name === "SequelizeValidationError") {
-                return res.status(400).json({
-                    error: "Erro de validação: " + error.errors.map(err => err.message).join(", "),
-                });
-            }
             res.status(500).json({ error: "Erro interno no servidor." });
         }
     },

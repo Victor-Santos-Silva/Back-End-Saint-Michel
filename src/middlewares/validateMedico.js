@@ -4,11 +4,6 @@ const validateMedico = (req, res, next) => {
     if (!crm || isNaN(Number(crm)) || Number(crm) <= 0) {
         return res.status(400).json({ msg: 'CRM inválido! Deve ser um número positivo.' });
     }
-
-    if (!senha || typeof senha !== 'string' || senha.trim().length < 6) {
-        return res.status(400).json({ msg: 'Senha inválida! A senha deve ter pelo menos 6 caracteres.' });
-    }
-
     next();
 };
 

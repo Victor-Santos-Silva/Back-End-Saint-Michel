@@ -17,13 +17,6 @@ const Usuario = sequelize.define('Usuario', {
         validate: {
             len: [11, 11], // Garante 11 caracteres
             isNumeric: true, // Apenas números
-            // Regex para garantir o formato do CPF
-            isCpfValid(value) {
-                const regex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
-                if (!regex.test(value)) {
-                    throw new Error('Formato de CPF inválido. Exemplo: 123.456.789-00');
-                }
-            }
         },
     },
     rg: {

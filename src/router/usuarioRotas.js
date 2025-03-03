@@ -7,8 +7,8 @@ router.post('/cadastro', usuarioController.create);
 
 router.post('/login', usuarioController.login)
 
-router.get('/', authenticateToken, usuarioController.getAll);
+router.get('/', usuarioController.getAll);
 
-router.get('/:id', authenticateToken, usuarioController.getOne);
+router.get('/:id', usuarioController.getOne);
 
 module.exports = router;

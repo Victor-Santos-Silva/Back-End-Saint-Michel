@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const usuarioService = {
     create: async (cadastro) => {
         try {
-            const { nomeCompleto, dataDeNascimento, cpf, rg, genero, endereco, telefone, convenioMedico, tipoSanguineo, email, senha } = cadastro;
+            const { nomeCompleto, dataDeNascimento, cpf, rg, genero, endereco, telefone, convenioMedico, tipoSanguineo, email, senha, imagemGenero } = cadastro;
 
             // Hash apenas na senha principal
             const hashSenha = await bcrypt.hash(senha, 10);
@@ -13,7 +13,7 @@ const usuarioService = {
             return await Usuario.create({
                 nomeCompleto, dataDeNascimento, cpf, rg, genero,
                 endereco, telefone, convenioMedico, tipoSanguineo,
-                email, senha: hashSenha
+                email, senha: hashSenha, imagemGenero 
             });
         } catch (error) {
             console.error('Erro ao criar usuário:', error);

@@ -58,6 +58,10 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    imagemGenero: { // Definindo o campo para a imagem
+        type: DataTypes.STRING, // Tipo STRING para armazenar o nome ou caminho da imagem
+        allowNull: true, // Permite que seja nulo (caso o gênero não tenha uma imagem associada)
+    }
 });
 
 module.exports = Usuario;

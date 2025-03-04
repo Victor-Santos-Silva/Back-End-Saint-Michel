@@ -43,6 +43,10 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING,
         allowNull: true, // Pode ser nulo
     },
+    planoConvenio: {
+        type: DataTypes.STRING,
+        allowNull: true, // Pode ser nulo
+    },
     tipoSanguineo: {
         type: DataTypes.ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'),
         allowNull: true, // Pode ser nulo

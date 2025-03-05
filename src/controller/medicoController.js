@@ -115,6 +115,25 @@ const medicoController = {
         } catch (error) {
             res.status(400).json({ error: error.message });
         }
+    },
+    buscarMedicosPorEspecialidade: async (req, res) => {
+        const { especialidade } = req.query;  // Recebe a especialidade via query string
+
+        try {
+            const medicos = await Medico.findAll({
+                where: {
+                    especialidade: especialidade  // Filtra pela especialidade
+                }
+            });
+
+            return res.status(200).json(medicos);  // Retorna a lista de médicos
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
+                message: "Erro ao buscar médicos",
+                error: error.message
+            });
+        }
     }
 };
 

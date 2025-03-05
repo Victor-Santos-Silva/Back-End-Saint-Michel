@@ -6,6 +6,10 @@ const upload = require("../config/uploadConfig"); // Middleware para upload de a
 
 const router = Router();
 
+//Buscar medicos
+router.get("/medicos", medicoController.buscarMedicosPorEspecialidade);
+
+
 // Login do médico
 router.post("/login", medicoController.login);
 

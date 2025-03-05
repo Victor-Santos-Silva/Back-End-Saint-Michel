@@ -7,13 +7,21 @@ const Agendamento = sequelize.define('Agendamento', {
         autoIncrement: true,
         primaryKey: true
     },
-    departamento: {
-        type: DataTypes.STRING,
-        allowNull: false
+    usuario_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'usuarios',
+            key: 'id'
+        }
     },
-    profissional: {
-        type: DataTypes.STRING,
-        allowNull: false
+    medico_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'medicos',
+            key: 'id'
+        }
     },
     data: {
         type: DataTypes.DATEONLY,
@@ -21,18 +29,6 @@ const Agendamento = sequelize.define('Agendamento', {
     },
     hora: {
         type: DataTypes.TIME,
-        allowNull: false
-    },
-    tipo_consulta: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    convenio: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    plano: {
-        type: DataTypes.STRING,
         allowNull: false
     }
 }, {

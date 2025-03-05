@@ -1,24 +1,24 @@
 const Agendamento = require("../models/Agendamento.js");
 
+
 const agendamentoController = {
   async criarAgendamento(req, res) {
     try {
-      const { departamento, profissional, data, hora, tipo_consulta, convenio, plano } = req.body;
+      const { especialidade, medico_id, data, hora } = req.body;
+      const usuario_id = req.user.id; 
 
-      const novoAgendamento = await Agendamento.create({
-        departamento,
-        profissional,
+      // Cria o agendamento no banco de dados
+      const agendamento = await Agendamento.create({
+        usuario_id,
+        especialidade,
+        medico_id,
         data,
-        hora,
-        tipo_consulta,
-        convenio,
-        plano
+        hora
       });
 
-      res.status(201).json({ message: 'Agendamento criado com sucesso!', agendamento: novoAgendamento });
+      res.status(201).json({ message: 'Agendamento criado com sucesso', agendamento });
     } catch (error) {
-      console.error("Erro ao criar agendamento:", error);
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ message: 'Erro ao criar agendamento', error: error.message });
     }
   },
 
@@ -52,17 +52,17 @@ const agendamentoController = {
     try {
       const { id } = req.params;
       const { departamento, profissional, data, hora, tipo_consulta, convenio, plano } = req.body;
-     
+
       const agendamento = await Agendamento.findByPk(id);
-      if(!agendamento){
-        return res.status(404).json({error: "Agendamento não encontrado"});
+      if (!agendamento) {
+        return res.status(404).json({ error: "Agendamento não encontrado" });
       }
 
       await Agendamento.update(
-      {departamento, profissional, data, hora, tipo_consulta, convenio, plano},
-      { where: { id } }
-    );
-    res.status(200).json({ message: "Agendamento atualizado com sucesso!" });
+        { departamento, profissional, data, hora, tipo_consulta, convenio, plano },
+        { where: { id } }
+      );
+      res.status(200).json({ message: "Agendamento atualizado com sucesso!" });
     } catch (error) {
       console.error("Erro ao atualizar agendamento:", error);
       res.status(500).json({ error: error.message });
@@ -74,8 +74,8 @@ const agendamentoController = {
       const { id } = req.params;
       const agendamento = await Agendamento.findByPk(id);
 
-      if(!agendamento){
-        return res.status(404).json({error: "Agendamento não encontrado"});
+      if (!agendamento) {
+        return res.status(404).json({ error: "Agendamento não encontrado" });
       }
       await agendamento.destroy();
       res.status(200).json({ message: 'Agendamento deletado com sucesso!' });

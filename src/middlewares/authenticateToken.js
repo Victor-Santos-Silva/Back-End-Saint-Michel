@@ -12,17 +12,16 @@ function authenticateToken(req, res, next) {
     }
 
     // Verificando e validando o token
-    jwt.verify(token, process.env.SECRET, (err, admin) => {
+    jwt.verify(token, process.env.SECRET, (err, decoded) => {
         if (err) {
-            return res.status(403).json({
-                msg: "Token inválido. Acesso negado."
-            });
+          return res.status(403).json({
+            msg: "Token inválido. Acesso negado."
+          });
         }
-
-        // O token é válido, então anexamos o admin (usuário) no objeto da requisição
-        req.user = admin;
+      
+        req.user = decoded; // Aqui o 'decoded' deve ter as informações do usuário
         next();
-    });
+      });
 }
 
 module.exports = authenticateToken;

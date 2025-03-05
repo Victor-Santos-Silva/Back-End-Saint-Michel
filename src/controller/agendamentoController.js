@@ -5,11 +5,10 @@ const agendamentoController = {
   async criarAgendamento(req, res) {
     try {
       const { especialidade, medico_id, data, hora } = req.body;
-      const usuario_id = req.user.id; 
 
       // Cria o agendamento no banco de dados
       const agendamento = await Agendamento.create({
-        usuario_id,
+        usuario_id: req.usuarioId,
         especialidade,
         medico_id,
         data,

@@ -18,7 +18,7 @@ router.post("/cadastro", upload.single("foto"), validateMedico, medicoController
 
 
 // Buscar todos os médicos
-router.get("/", authenticateToken, medicoController.findAll);
+router.get("/",  medicoController.findAll);
 
 // Buscar médico por ID
 router.get("/:id", authenticateToken, validateMedicoId, medicoController.findById);

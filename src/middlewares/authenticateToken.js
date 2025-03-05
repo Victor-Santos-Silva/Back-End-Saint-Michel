@@ -19,7 +19,7 @@ function authenticateToken(req, res, next) {
           });
         }
       
-        req.user = decoded; // Aqui o 'decoded' deve ter as informações do usuário
+        req.usuarioId = decoded.id; // Aqui o 'decoded' deve ter as informações do usuário
         next();
       });
 }

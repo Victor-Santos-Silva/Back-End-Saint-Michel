@@ -2,25 +2,32 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const AgendamentoDocente = sequelize.define('AgendamentoDocente', {
+    usuario_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    medico_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    especialidade: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     nome: {
         type: DataTypes.STRING,
         allowNull: false
     },
     data: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
+        allowNull: false
+    },
+    hora: {
+        type: DataTypes.TIME,
         allowNull: false
     },
     cpf: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-            is: /^[0-9]+$/, 
-            len: [11, 11]   
-        }
-    },
-    hora: {
-        type: DataTypes.TIME,
         allowNull: false
     },
     endereco: {
@@ -43,9 +50,6 @@ const AgendamentoDocente = sequelize.define('AgendamentoDocente', {
         type: DataTypes.STRING,
         allowNull: false
     }
-}, {
-    tableName: 'agendamentodocentes',
-    timestamps: false
 });
 
 module.exports = AgendamentoDocente;

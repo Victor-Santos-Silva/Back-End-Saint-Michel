@@ -16,12 +16,15 @@ const Usuario = sequelize.define('Usuario', {
         unique: true,
         validate: {
             len: [11, 11], // Garante 11 caracteres
-            isNumeric: true, // Apenas números
         },
     },
     rg: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
+        validate: {
+            len: [7, 10], // Garante 10 caracteres
+        },
     },
     genero: {
         type: DataTypes.ENUM('Masculino', 'Feminino', 'Outro'),

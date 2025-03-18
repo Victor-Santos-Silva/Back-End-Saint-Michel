@@ -32,7 +32,8 @@ const usuarioController = {
             return res.status(200).json({
                 msg: "Login realizado",
                 token,
-                usuario: usuario.nomeCompleto
+                usuario: usuario.nomeCompleto,
+                id: usuario.id
             });
         } catch (error) {
             console.error(error);

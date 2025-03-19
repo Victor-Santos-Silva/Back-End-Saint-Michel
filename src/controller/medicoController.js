@@ -31,7 +31,9 @@ const medicoController = {
 
             return res.status(200).json({
                 msg: "Login realizado com sucesso",
-                token,
+                token: token,
+                medico: medico.nome_completo,
+                id: medico.id,
             });
         } catch (error) {
             console.error("Erro no login:", error);

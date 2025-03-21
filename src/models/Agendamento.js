@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
+
 const Agendamento = sequelize.define('Agendamento', {
     id: {
         type: DataTypes.INTEGER,
@@ -35,5 +36,9 @@ const Agendamento = sequelize.define('Agendamento', {
     tableName: 'agendamentos',
     timestamps: false
 });
+
+
+ 
+  
 
 module.exports = Agendamento;

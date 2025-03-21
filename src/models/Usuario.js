@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
+
 const Usuario = sequelize.define('Usuario', {
     nomeCompleto: {
         type: DataTypes.STRING,
@@ -73,5 +74,7 @@ const Usuario = sequelize.define('Usuario', {
 }, {
     timestamps: true, // Adiciona createdAt e updatedAt automaticamente
 });
+
+
 
 module.exports = Usuario;

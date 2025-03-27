@@ -6,7 +6,12 @@ const bcrypt = require("bcrypt");
 const medicoController = {
     login: async (req, res) => {
         try {
-            const { crm, senha } = req.body;
+            const { crm, senha_corporativa } = req.body;
+
+            // Validação dos campos
+            if (!crm || !senha_corporativa) {
+                return res.status(400).json({ msg: "CRM e senha são obrigatórios." });
+            }
 
             const medico = await Medico.findOne({ where: { crm } });
 
@@ -16,15 +21,13 @@ const medicoController = {
                 });
             }
 
-            const isValida = await bcrypt.compare(senha, medico.senha_corporativa);
+            const isValida = await bcrypt.compare(senha_corporativa, medico.senha_corporativa);
             if (!isValida) {
-                return res.status(400).json({
-                    msg: "Senha incorreta",
-                });
+                return res.status(400).json({ msg: "Senha incorreta." });
             }
 
             const token = jwt.sign(
-                { id: medico.id, crm: medico.crm, nome: medico.nome_completo },
+                { id: medico.id, crm: medico.crm },
                 process.env.SECRET,
                 { expiresIn: "1h" }
             );
@@ -36,8 +39,36 @@ const medicoController = {
                 id: medico.id,
             });
         } catch (error) {
-            console.error("Erro no login:", error);
+            console.error("Erro no login:", error.message, error.stack);
             return res.status(500).json({ msg: "Erro interno no servidor, acione o suporte" });
+        }
+    },
+
+    esqueciSenha: async (req, res) => {
+        const { email_corporativo, novaSenha } = req.body;
+
+        // Validação básica dos campos
+        if (!email_corporativo || !novaSenha) {
+            return res.status(400).json({
+                msg: "Email e nova senha são obrigatórios",
+            });
+        }
+
+        try {
+            const medico = await medicoService.esqueciSenha(email_corporativo, novaSenha);
+            if (!medico) {
+                return res.status(400).json({
+                    msg: "Medico não encontrado ou email incorreto",
+                });
+            }
+            return res.status(200).json({
+                msg: "Senha do admin foi atualizada com sucesso",
+                medico: medico,
+            });
+        } catch (error) {
+            return res.status(500).json({
+                msg: error.message || "Erro ao atualizar o Admin",
+            });
         }
     },
 
@@ -72,6 +103,8 @@ const medicoController = {
             res.status(500).json({ error: "Erro interno no servidor." });
         }
     },
+
+    
 
     findById: async (req, res) => {
         try {

@@ -18,20 +18,23 @@ const admService = {
     },
     esqueciSenha: async (email, novaSenha) => {
         try {
-            const admin = await Adm.findByPk(id);
+            // Primeiro busca o admin pelo email
+            const admin = await Adm.findOne({ where: { email } });
+
             if (!admin) {
                 return null;
             }
 
-            if (admin.email !== email) {
-                return null;
+            // Verifica se a nova senha tem pelo menos 6 caracteres
+            if (novaSenha.length < 6) {
+                throw new Error("A senha deve ter pelo menos 6 caracteres");
             }
 
             const hashSenha = await bcrypt.hash(novaSenha, 10);
             await admin.update({ senha: hashSenha });
             return admin;
         } catch (error) {
-            throw new Error("Ocorreu um erro ao trocar a senha do Admin");
+            throw new Error(error.message || "Ocorreu um erro ao trocar a senha do Admin");
         }
     },
     update: async (id, adminToUpdate) => {

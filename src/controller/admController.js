@@ -38,10 +38,19 @@ const admController = {
             return res.status(500).json({ msg: "Acione o suporte" });
         }
     },
+
     esqueciSenha: async (req, res) => {
         const { email, novaSenha } = req.body;
+
+        // Validação básica dos campos
+        if (!email || !novaSenha) {
+            return res.status(400).json({
+                msg: "Email e nova senha são obrigatórios",
+            });
+        }
+
         try {
-            const admin = await adminService.esqueciSenha(email, novaSenha);
+            const admin = await admService.esqueciSenha(email, novaSenha);
             if (!admin) {
                 return res.status(400).json({
                     msg: "Admin não encontrado ou email incorreto",
@@ -49,15 +58,15 @@ const admController = {
             }
             return res.status(200).json({
                 msg: "Senha do admin foi atualizada com sucesso",
-                admin,
+                admin: admin,
             });
         } catch (error) {
             return res.status(500).json({
-                msg: "Erro ao atualizar o Admin",
+                msg: error.message || "Erro ao atualizar o Admin",
             });
         }
     },
-    
+
     create: async (req, res) => {
         try {
             const novoCadastroAdm = await admService.create(req.body);
@@ -75,6 +84,7 @@ const admController = {
             res.status(500).json({ error: 'Erro interno no servidor.' });
         }
     },
+
     update: async (req, res) => {
         try {
             const admin = await admService.update(req.params.id, req.body);

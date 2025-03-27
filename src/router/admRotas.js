@@ -21,7 +21,7 @@ router.get('/:id', authenticateToken, validateAdminId, admController.getOne);
 router.put('/:id', authenticateToken, validateAdmin, validateAdminId, admController.update);
 
 //funçao de esqueci senha
-router.put('/:id', authenticateToken, validateAdmin, validateAdminId, admController.esqueciSenha)
+router.put('/esqueciSenha/:id', authenticateToken, validateAdminId, admController.esqueciSenha)
 
 // funcao de deletar
 router.delete('/:id', authenticateToken, validateAdminId, admController.delete);

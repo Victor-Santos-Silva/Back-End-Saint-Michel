@@ -55,6 +55,28 @@ const medicoService = {
         }
     },
 
+    esqueciSenha: async (email_corporativo, novaSenha) => {
+        try {
+            // Primeiro busca o admin pelo email
+            const medico = await Medico.findOne({ where: { email_corporativo } });
+
+            if (!medico) {
+                throw new Error("Médico não encontrado");
+            }
+
+            // Verifica se a nova senha tem pelo menos 6 caracteres
+            if (novaSenha.length < 6) {
+                throw new Error("A senha deve ter pelo menos 6 caracteres");
+            }
+
+            const hashSenha = await bcrypt.hash(novaSenha, 10);
+            await medico.update({ senha_corporativa: hashSenha });
+            return medico;
+        } catch (error) {
+            throw new Error(error.message || "Ocorreu um erro ao trocar a senha do Admin");
+        }
+    },
+
     delete: async (id) => {
         try {
             const medico = await Medico.findByPk(id);

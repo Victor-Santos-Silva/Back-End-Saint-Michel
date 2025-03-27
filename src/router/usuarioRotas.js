@@ -10,4 +10,10 @@ router.get('/', usuarioController.getAll);
 
 router.get('/:id', usuarioController.getOne);
 
+router.put('/:id', usuarioController.update);
+
+router.put('/esqueciSenha/:id', usuarioController.esqueciSenha);
+
+router.delete('/:id', usuarioController.delete);
+
 module.exports = router;

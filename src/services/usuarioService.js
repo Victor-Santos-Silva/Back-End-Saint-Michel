@@ -1,3 +1,4 @@
+const Agendamento = require("../models/Agendamento");
 const Usuario = require("../models/Usuario");
 const bcrypt = require('bcrypt');
 
@@ -20,6 +21,18 @@ const usuarioService = {
             throw error;
         }
     },
+    esqueciSenha: async (email, senhaNova) => {
+        const usuario = await Usuario.findOne({ where: { email } });
+
+        if (!usuario) {
+            throw new Error("Usuario não encontrado");
+        }
+
+        const hashSenha = await bcrypt.hash(senhaNova, 10);
+        await usuario.update({ senha: hashSenha });
+        return usuario;
+
+    },
     getById: async (id) => {
         try {
             return await Usuario.findByPk(id);
@@ -32,6 +45,39 @@ const usuarioService = {
             return await Usuario.findAll();
         } catch (error) {
             throw new Error('Erro ao buscar usuários.');
+        }
+    },
+    update: async (id, atualizacao) => {
+        try {
+            const usuario = await Usuario.findByPk(id);
+
+            if (!usuario) {
+                throw new Error("Usuario não encontrado.");
+            }
+
+            await usuario.update(atualizacao);
+            return usuario;
+        } catch (error) {
+            throw new Error("Erro ao atualizar:" + error);
+
+        }
+    },
+    delete: async (id) => {
+        try {
+            const usuarioDeletado = await Usuario.findByPk(id);
+            if (!usuarioDeletado) {
+                throw new Error("Usuario não encontrado.");
+            }
+
+            await Agendamento.destroy({
+                where: { usuario_id: id }
+            });
+
+            await usuarioDeletado.destroy();
+            return { msg: "Usuario removido com sucesso." }
+
+        } catch (error) {
+            throw error;
         }
     }
 };

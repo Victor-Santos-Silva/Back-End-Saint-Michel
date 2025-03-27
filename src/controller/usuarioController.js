@@ -41,6 +41,35 @@ const usuarioController = {
         }
     },
 
+    esqueciSenha: async (req, res) => {
+        const { email, senhaNova } = req.body;
+
+        // Validação básica dos campos
+        if (!email || !senhaNova) {
+            return res.status(400).json({
+                msg: "Email e nova senha são obrigatórios",
+            });
+        }
+
+        try {
+            const usuario = await usuarioService.esqueciSenha(email, senhaNova);
+            if (!usuario) {
+                return res.status(400).json({
+                    msg: "Usuario não encontrado ou email incorreto",
+                });
+            }
+
+            return res.status(200).json({
+                msg: "Senha do usuario foi atualizada com sucesso",
+                usuario: usuario,
+            });
+        } catch (error) {
+            return res.status(500).json({
+                msg: error.message || "Erro ao atualizar o usuario",
+            });
+        }
+    },
+
     create: async (req, res) => {
         try {
             const novoCadastro = await usuarioService.create(req.body);
@@ -85,6 +114,30 @@ const usuarioController = {
             return res.status(500).json({
                 msg: 'Ocorreu um erro no servidor'
             });
+        }
+    },
+
+    update: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const atualizacao = req.body;
+            const atualizado = await usuarioService.update(id, atualizacao);
+            res.status(200).json(atualizado);
+
+        } catch (error) {
+            return res.status(500).json({
+                msg: 'Ocorreu um erro no servidor'
+            });
+        }
+    },
+
+    delete: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const deletado = await usuarioService.delete(id);
+            res.status(200).json(deletado);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
         }
     }
 };

@@ -22,7 +22,7 @@ const admService = {
             const admin = await Adm.findOne({ where: { email } });
 
             if (!admin) {
-                return null;
+                throw new Error("Adm não encontrado");
             }
 
             // Verifica se a nova senha tem pelo menos 6 caracteres

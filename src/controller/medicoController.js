@@ -151,6 +151,7 @@ const medicoController = {
             res.status(400).json({ error: error.message });
         }
     },
+    
     buscarMedicosPorEspecialidade: async (req, res) => {
         const { especialidade } = req.query;  // Recebe a especialidade via query string
 

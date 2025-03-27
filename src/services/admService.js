@@ -40,11 +40,16 @@ const admService = {
     update: async (id, adminToUpdate) => {
         try {
             const admin = await Adm.findByPk(id);
-            if (!admin) { // user for vazio
-                return null;
+            if (!admin) {
+                throw new Error("Adm não encontrado.");
             }
+
+            if (adminToUpdate.senha) {
+                const hashSenha = await bcrypt.hash(adminToUpdate.senha, 10);
+                adminToUpdate.senha = hashSenha;
+            }
+
             await admin.update(adminToUpdate);
-            await admin.save();
             return admin;
         } catch (error) {
             throw new Error('Ocorreu um erro ao atualizar admin');

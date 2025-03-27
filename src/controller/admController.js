@@ -87,16 +87,10 @@ const admController = {
 
     update: async (req, res) => {
         try {
-            const admin = await admService.update(req.params.id, req.body);
-            if (!admin) {
-                return res.status(400).json({
-                    msg: 'Admin nao encontrado'
-                });
-            }
-            return res.status(200).json({
-                msg: 'Admin atualizado com sucesso',
-                admin
-            });
+            const { id } = req.params;
+            const atualizacaoAdm = req.body;
+            const admAtualizado = await admService.update(id, atualizacaoAdm);
+            res.status(200).json(admAtualizado);
         } catch (error) {
             return res.status(500).json({
                 msg: 'Erro ao atualizar o admin'

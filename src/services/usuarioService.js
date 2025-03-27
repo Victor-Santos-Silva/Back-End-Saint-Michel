@@ -50,9 +50,13 @@ const usuarioService = {
     update: async (id, atualizacao) => {
         try {
             const usuario = await Usuario.findByPk(id);
-
             if (!usuario) {
                 throw new Error("Usuario não encontrado.");
+            }
+
+            if (atualizacao.senha) {
+                const hashSenha = await bcrypt.hash(atualizacao.senha, 10);
+                atualizacao.senha = hashSenha;
             }
 
             await usuario.update(atualizacao);

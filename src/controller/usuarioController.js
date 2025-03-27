@@ -123,7 +123,6 @@ const usuarioController = {
             const atualizacao = req.body;
             const atualizado = await usuarioService.update(id, atualizacao);
             res.status(200).json(atualizado);
-
         } catch (error) {
             return res.status(500).json({
                 msg: 'Ocorreu um erro no servidor'

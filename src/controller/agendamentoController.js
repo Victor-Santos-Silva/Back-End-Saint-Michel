@@ -21,7 +21,7 @@ const agendamentoController = {
     }
   },
 
-  async listarAgendamentoss(req, res) {
+  async listarTodosOsAgendamentos(req, res) {
     try {
       const agendamentos = await Agendamento.findAll();
       res.status(200).json(agendamentos);
@@ -68,27 +68,6 @@ const agendamentoController = {
       res.status(200).json(agendamento);
     } catch (error) {
       console.error("Erro ao obter agendamento:", error);
-      res.status(500).json({ error: error.message });
-    }
-  },
-
-  async atualizarAgendamento(req, res) {
-    try {
-      const { id } = req.params;
-      const { departamento, profissional, data, hora, tipo_consulta, convenio, plano } = req.body;
-
-      const agendamento = await Agendamento.findByPk(id);
-      if (!agendamento) {
-        return res.status(404).json({ error: "Agendamento não encontrado" });
-      }
-
-      await Agendamento.update(
-        { departamento, profissional, data, hora, tipo_consulta, convenio, plano },
-        { where: { id } }
-      );
-      res.status(200).json({ message: "Agendamento atualizado com sucesso!" });
-    } catch (error) {
-      console.error("Erro ao atualizar agendamento:", error);
       res.status(500).json({ error: error.message });
     }
   },

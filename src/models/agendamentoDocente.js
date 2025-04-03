@@ -2,21 +2,15 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const AgendamentoDocente = sequelize.define('AgendamentoDocente', {
-    usuario_id: {
+    usuario_id: { // Quem fez o AgendamentoDocente
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: { model: 'usuarios', key: 'id' }
     },
-    medico_id: {
+    medico_id: { // Médico que atenderá
         type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    especialidade: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    nome: {
-        type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        references: { model: 'medicos', key: 'id' }
     },
     data: {
         type: DataTypes.DATEONLY,
@@ -26,17 +20,47 @@ const AgendamentoDocente = sequelize.define('AgendamentoDocente', {
         type: DataTypes.TIME,
         allowNull: false
     },
+
+    nomeCompleto: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    dataDeNascimento: {
+        type: DataTypes.DATEONLY,
+        allowNull: false
+    },
     cpf: {
         type: DataTypes.STRING,
+        allowNull: false,
+    },
+    rg: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: { len: [7, 10] }
+    },
+    genero: {
+        type: DataTypes.ENUM('Masculino', 'Feminino', 'Outro'),
         allowNull: false
     },
     endereco: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    genero: {
+    telefone: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            len: [10, 11],
+            isNumeric: true
+        }
+    },
+    convenioMedico: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    planoConvenio: {
+        type: DataTypes.STRING,
+        allowNull: true
     },
     etnia: {
         type: DataTypes.STRING,
@@ -49,7 +73,17 @@ const AgendamentoDocente = sequelize.define('AgendamentoDocente', {
     parentesco: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    tipoSanguineo: {
+        type: DataTypes.ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'),
+        allowNull: true
+    },
+    imagemGenero: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
+}, {
+    timestamps: true
 });
 
 module.exports = AgendamentoDocente;

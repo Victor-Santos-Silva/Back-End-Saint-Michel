@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-
 const Usuario = sequelize.define('usuarios', {
     nomeCompleto: {
         type: DataTypes.STRING,
@@ -53,7 +52,7 @@ const Usuario = sequelize.define('usuarios', {
     },
     tipoSanguineo: {
         type: DataTypes.ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'),
-        allowNull: true, // Pode ser nulo
+        allowNull: true
     },
     email: {
         type: DataTypes.STRING,

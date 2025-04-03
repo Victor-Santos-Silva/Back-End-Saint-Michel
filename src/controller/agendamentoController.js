@@ -1,4 +1,5 @@
 const Agendamento = require("../models/Agendamento.js");
+const AgendamentoDocente = require("../models/agendamentoDocente.js");
 const Usuarios = require("../models/Usuario.js");
 
 const agendamentoController = {
@@ -31,7 +32,6 @@ const agendamentoController = {
     }
   },
 
-  //teste
   async listarAgendamentos(req, res) {
     try {
       const { medico_id } = req.query; // Pega o medico_id da query string
@@ -40,19 +40,22 @@ const agendamentoController = {
       if (medico_id) {
         // Filtra os agendamentos pelo medico_id
         agendamentos = await Agendamento.findAll({
-          where: { medico_id: medico_id }, // Filtra pelo ID do médico
-          include: [{ model: Usuarios }], // Inclui os dados do usuário
-        }).then(agendamentos => {
-          res.status(200).json(agendamentos);
+          where: { medico_id: medico_id },
+          include: [
+            { model: Usuarios, },
+          ],
         });
       } else {
         // Se não houver medico_id, retorna todos os agendamentos
         agendamentos = await Agendamento.findAll();
       }
 
+      // Retorna os agendamentos como resposta
+      res.status(200).json(agendamentos);
+
     } catch (error) {
+      console.error("Erro ao listar agendamentos:", error);
       res.status(500).json({ error: error.message });
-      console.error("Erro ao listar agendamento:", error);
     }
   },
 
@@ -65,7 +68,9 @@ const agendamentoController = {
         return res.status(404).json({ message: 'Agendamento não encontrado' });
       }
 
-      res.status(200).json(agendamento);
+      res.status(200).json({
+        AgendamentosUsuarios: agendamento
+      });
     } catch (error) {
       console.error("Erro ao obter agendamento:", error);
       res.status(500).json({ error: error.message });

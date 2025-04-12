@@ -21,9 +21,9 @@ const examePacienteController = {
         }
     },
 
-    getAll: (req, res) => {
+    getAll: async (req, res) => {
         try {
-            const examesPacientes = examePacienteService.getAll();
+            const examesPacientes = await examePacienteService.getAll();
             res.status(200).json(examesPacientes);
         } catch (error) {
             console.log('Error fetching examePacientes:', error);
@@ -31,9 +31,9 @@ const examePacienteController = {
         }
     },
 
-    getOne: (req, res) => {
+    getOne: async (req, res) => {
         try {
-            const examePaciente = examePacienteService.getOne(req.params.id);
+            const examePaciente = await examePacienteService.getOne(req.params.id);
             if (!examePaciente) {
                 return res.status(404).json({ message: 'ExamePaciente not found' });
             }

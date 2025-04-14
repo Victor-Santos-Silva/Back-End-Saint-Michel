@@ -9,11 +9,12 @@ const Medico = sequelize.define("Medico", {
             notEmpty: { msg: "O nome completo não pode estar vazio." },
         },
     },
-    idade: {
-        type: DataTypes.INTEGER,
+    dataNascimento: {
+        type: DataTypes.DATEONLY,
         allowNull: false,
         validate: {
-            min: { args: [18], msg: "A idade deve ser maior ou igual a 18 anos." },
+            isDate: { msg: "Informe uma data válida." },
+            isBefore: { args: new Date().toISOString(), msg: "A data de nascimento não pode ser futura." },
         },
     },
     cpf: {

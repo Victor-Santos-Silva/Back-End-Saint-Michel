@@ -12,10 +12,7 @@ const Medico = sequelize.define("Medico", {
     dataNascimento: {
         type: DataTypes.DATEONLY,
         allowNull: false,
-        validate: {
-            isDate: { msg: "Informe uma data válida." },
-            isBefore: { args: new Date().toISOString(), msg: "A data de nascimento não pode ser futura." },
-        },
+        
     },
     cpf: {
         type: DataTypes.STRING,

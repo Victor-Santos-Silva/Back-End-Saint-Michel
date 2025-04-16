@@ -6,9 +6,11 @@ const agendamento = require("./agendamentoRoutes");
 const agendamentoDocente = require("./agendamentoDocenteRoutes");
 const contato = require("./contatoRouter");
 const exame = require("./exameRouter");
+const duvidas = require("./duvidasRoutes")
 
 const router = Router();
 
+router.use('/duvidas', duvidas)
 router.use('/paciente', usuarios);
 router.use("/admin", admRoutes);
 router.use("/medico", medicoRoutes)

@@ -16,4 +16,4 @@ router.put('/esqueciSenha/:id', usuarioController.esqueciSenha);
 
 router.delete('/:id', usuarioController.delete);
 
-module.exports = router;
+module.exports = router

@@ -74,8 +74,8 @@ const duvidasController = {
             const { id } = req.params;
             await duvidasService.delete(id);
             
-            res.status(204).json({
-                message: 'Dúvida removida com sucesso!'
+            res.status(200).json({
+                message: 'Dúvida removida com sucesso!',
             });
         } catch (error) {
             res.status(500).json({

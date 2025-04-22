@@ -22,7 +22,6 @@ router.put('/:id', validateAdminId, admController.update);
 //funçao de esqueci senha
 router.put('/esqueciSenha/:id', validateAdminId, admController.esqueciSenha)
 
-// funcao de deletar
 router.delete('/:id', validateAdminId, admController.delete);
 
 

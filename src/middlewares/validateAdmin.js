@@ -23,14 +23,20 @@ const validateAdmin = (req, res, next) => {
 const validateAdminId = (req, res, next) => {
     const { id } = req.params;
 
-    // Validação do ID (suporte a numérico e UUID)
     const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
-    if (!id || (!uuidRegex.test(id) && isNaN(Number(id)))) {
-        return res.status(400).json({ msg: 'Parâmetro id inválido.' });
+    // Verificação corrigida
+    if (!id) {
+        return res.status(400).json({ msg: 'ID não fornecido.' });
+    }
+
+    // Verifica se é UUID OU número
+    const isValid = uuidRegex.test(id) || !isNaN(Number(id));
+    
+    if (!isValid) {
+        return res.status(400).json({ msg: 'ID inválido. Deve ser UUID ou número.' });
     }
 
     next();
 };
-
-module.exports = { validateAdmin, validateAdminId };
+module.exports = { validateAdmin };

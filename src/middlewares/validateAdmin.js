@@ -32,11 +32,11 @@ const validateAdminId = (req, res, next) => {
 
     // Verifica se é UUID OU número
     const isValid = uuidRegex.test(id) || !isNaN(Number(id));
-    
+
     if (!isValid) {
         return res.status(400).json({ msg: 'ID inválido. Deve ser UUID ou número.' });
     }
 
     next();
 };
-module.exports = { validateAdmin };
+module.exports = { validateAdmin, validateAdminId };

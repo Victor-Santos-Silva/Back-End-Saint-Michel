@@ -62,7 +62,7 @@ const medicoController = {
                 });
             }
             return res.status(200).json({
-                msg: "Senha do admin foi atualizada com sucesso",
+                msg: "Senha do medico foi atualizada com sucesso",
                 medico: medico,
             });
         } catch (error) {

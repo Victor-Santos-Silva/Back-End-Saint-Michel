@@ -24,7 +24,7 @@ router.get("/", medicoController.findAll);
 router.get("/:id", validateMedicoId, medicoController.findById);
 
 //
-router.put('/esqueciSenha/:id', validateMedicoId, medicoController.esqueciSenha)
+router.patch('/esqueciSenha', medicoController.esqueciSenha)
 
 // Atualizar dados do médico
 router.put("/:id", upload.single("foto"), authenticateToken, validateMedicoId, medicoController.update);

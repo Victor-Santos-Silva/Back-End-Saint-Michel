@@ -61,7 +61,7 @@ const medicoService = {
             const medico = await Medico.findOne({ where: { email_corporativo } });
 
             if (!medico) {
-                throw new Error("Médico não encontrado");
+                throw new Error("Email do médico não encontrado.");
             }
 
             // Verifica se a nova senha tem pelo menos 6 caracteres

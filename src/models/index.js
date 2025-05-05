@@ -4,6 +4,7 @@ const sequelize = require('../config/database');
 const Usuarios = require("../models/Usuario.js");
 const Agendamento = require("../models/Agendamento.js");
 const AgendamentoDocente = require('./agendamentoDocente.js');
+const Prontuario = require('./Prontuario.js');
 
 const db = [];
 
@@ -29,6 +30,9 @@ Usuarios.hasMany(Agendamento, { foreignKey: 'usuario_id'});
 
 AgendamentoDocente.belongsTo(Usuarios, { foreignKey: 'usuario_id' }); 
 Usuarios.hasMany(AgendamentoDocente, { foreignKey: 'usuario_id' });
+
+Prontuario.belongsTo(Usuarios, { foreignKey: 'usuario_id' }); 
+Usuarios.hasMany(Prontuario, { foreignKey: 'usuario_id' });
 
 sequelize.sync();
 

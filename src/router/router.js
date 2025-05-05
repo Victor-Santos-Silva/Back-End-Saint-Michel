@@ -8,7 +8,7 @@ const contato = require("./contatoRouter");
 const exame = require("./exameRouter");
 const duvidas = require("./duvidasRoutes");
 const cepRoutes = require("./cepRotas"); // Importação da nova rota de CEP
-
+const prontuario = require("./prontuarioRotas"); // Importação da nova rota de prontuário
 const router = Router();
 
 router.use('/duvidas', duvidas);
@@ -20,5 +20,5 @@ router.use('/agendamentoDocente', agendamentoDocente);
 router.use('/contato', contato);
 router.use('/exame', exame);
 router.use('/cep', cepRoutes); // Adicionando a rota de CEP
-
+router.use('/prontuario', prontuario);
 module.exports = router;

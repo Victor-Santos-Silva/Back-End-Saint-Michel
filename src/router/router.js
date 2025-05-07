@@ -5,6 +5,7 @@ const medicoRoutes = require("./medicoRotas");
 const agendamento = require("./agendamentoRoutes");
 const agendamentoDocente = require("./agendamentoDocenteRoutes");
 const contato = require("./contatoRouter");
+const notificacaoRoutes = require("./notificationRoutes");
 const exame = require("./exameRouter");
 const duvidas = require("./duvidasRoutes");
 const cepRoutes = require("./cepRotas"); // Importação da nova rota de CEP
@@ -15,6 +16,7 @@ router.use('/duvidas', duvidas);
 router.use('/paciente', usuarios);
 router.use("/admin", admRoutes);
 router.use("/medico", medicoRoutes);
+router.use("/notificacoes", notificacaoRoutes);
 router.use('/agendamento', agendamento);
 router.use('/agendamentoDocente', agendamentoDocente);
 router.use('/contato', contato);

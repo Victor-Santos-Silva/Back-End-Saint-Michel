@@ -1,5 +1,6 @@
 const service = require('../services/notificationService');
-const { createSchema } = require('../validators/notificationValidator');
+const { Notificacao } = require('../models');
+const { createSchema } = require('../middlewares/notificationValidator');
  
 async function create(req, res) {
   const { error } = createSchema.validate(req.body);
@@ -9,7 +10,7 @@ async function create(req, res) {
     const id = await service.create(req.body);
     res.status(201).json({ id });
   } catch (err) {
-    res.status(500).json({ error: 'Erro ao criar notificação' });
+    console.error('Erro real ao criar notificação:', err);
   }
 }
  
@@ -23,14 +24,38 @@ async function list(req, res) {
   }
 }
  
-async function markRead(req, res) {
+const markRead = async (id) => {
   try {
-    await service.read(req.params.id);
-    res.json({ message: 'Notificação marcada como lida' });
-  } catch {
-    res.status(500).json({ error: 'Erro ao marcar como lida' });
+    const notificationId = Number(id); // Garante que o `id` seja um número
+
+    // Verifica se a notificação existe
+    const notification = await Notificacao.findOne({ where: { id: notificationId } });
+
+    if (!notification) {
+      throw new Error('Notificação não encontrada');
+    }
+
+    // Se a notificação já estiver marcada como lida, não faz nada
+    if (notification.lida) {
+      throw new Error('Notificação já foi marcada como lida');
+    }
+
+    // Atualiza a notificação como lida
+    const updatedNotification = await Notificacao.update(
+      { lida: true }, // Dados a serem atualizados
+      { where: { id: notificationId } } // Certifique-se de que `id` é um número
+    );
+
+    if (updatedNotification[0] === 0) {
+      throw new Error('Falha ao marcar a notificação como lida');
+    }
+
+    return updatedNotification;
+  } catch (error) {
+    console.error("Erro ao marcar como lida:", error);
+    throw error;  // Lança o erro para ser tratado na camada superior
   }
-}
+};
  
 async function remove(req, res) {
   try {

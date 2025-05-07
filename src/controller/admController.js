@@ -24,7 +24,7 @@ const admController = {
             }
 
             const token = jwt.sign(
-                { email: admin.email, nome: admin.nome },
+                { email: admin.email, nome: admin.nome, id: admin.id },
                 process.env.SECRET,
                 { expiresIn: "1h" }
             );
@@ -32,6 +32,8 @@ const admController = {
             return res.status(200).json({
                 msg: "Login realizado",
                 token,
+                nome: admin.nome,
+                id: admin.id
             });
         } catch (error) {
             console.error(error);

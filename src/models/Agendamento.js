@@ -31,6 +31,11 @@ const Agendamento = sequelize.define('Agendamento', {
     hora: {
         type: DataTypes.TIME,
         allowNull: false
+    },
+    status: {
+        type: DataTypes.ENUM('pendente', 'finalizado', 'nao_compareceu'),
+        allowNull: false,
+        defaultValue: 'pendente'
     }
 }, {
     tableName: 'agendamentos',
@@ -38,7 +43,7 @@ const Agendamento = sequelize.define('Agendamento', {
 });
 
 
- 
-  
+
+
 
 module.exports = Agendamento;

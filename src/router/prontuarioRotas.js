@@ -8,6 +8,4 @@ router.get("/:id", prontuarioController.getOne);
 
 router.post("/", prontuarioController.create);
 
-router.delete("/:id", prontuarioController.delete);
-
 module.exports = router;

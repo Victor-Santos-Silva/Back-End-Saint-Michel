@@ -81,6 +81,11 @@ const AgendamentoDocente = sequelize.define('AgendamentoDocente', {
     imagemGenero: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    status: {
+        type: DataTypes.ENUM('pendente', 'finalizado', 'nao_compareceu'),
+        allowNull: false,
+        defaultValue: 'pendente'
     }
 }, {
     timestamps: true

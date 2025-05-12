@@ -1,71 +1,74 @@
 const service = require('../services/notificationService');
 const { Notificacao } = require('../models');
 const { createSchema } = require('../middlewares/notificationValidator');
- 
+
+// Criação de notificação
 async function create(req, res) {
   const { error } = createSchema.validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
- 
+
   try {
     const id = await service.create(req.body);
     res.status(201).json({ id });
   } catch (err) {
     console.error('Erro real ao criar notificação:', err);
+    res.status(500).json({ error: 'Erro ao criar notificação' });
   }
 }
- 
+
+// Listagem de notificações por usuário
 async function list(req, res) {
   try {
-    const user_id = parseInt(req.params.user_id);
+    const user_id = parseInt(req.params.user_id, 10);
+    if (isNaN(user_id)) return res.status(400).json({ error: 'ID de usuário inválido' });
+
     const data = await service.list(user_id);
     res.json(data);
-  } catch {
+  } catch (err) {
+    console.error('Erro ao buscar notificações:', err);
     res.status(500).json({ error: 'Erro ao buscar notificações' });
   }
 }
- 
-const markRead = async (id) => {
-  try {
-    const notificationId = Number(id); // Garante que o `id` seja um número
 
-    // Verifica se a notificação existe
+// Marcar notificação como lida
+async function markRead(req, res) {
+  try {
+    const notificationId = parseInt(req.params.id, 10);
+    if (isNaN(notificationId)) return res.status(400).json({ error: 'ID inválido' });
+
     const notification = await Notificacao.findOne({ where: { id: notificationId } });
 
     if (!notification) {
-      throw new Error('Notificação não encontrada');
+      return res.status(404).json({ error: 'Notificação não encontrada' });
     }
 
-    // Se a notificação já estiver marcada como lida, não faz nada
     if (notification.lida) {
-      throw new Error('Notificação já foi marcada como lida');
+      return res.status(400).json({ error: 'Notificação já foi marcada como lida' });
     }
 
-    // Atualiza a notificação como lida
-    const updatedNotification = await Notificacao.update(
-      { lida: true }, // Dados a serem atualizados
-      { where: { id: notificationId } } // Certifique-se de que `id` é um número
-    );
+    await Notificacao.update({ lida: true }, { where: { id: notificationId } });
 
-    if (updatedNotification[0] === 0) {
-      throw new Error('Falha ao marcar a notificação como lida');
-    }
-
-    return updatedNotification;
+    return res.status(200).json({ message: 'Notificação marcada como lida com sucesso' });
   } catch (error) {
-    console.error("Erro ao marcar como lida:", error);
-    throw error;  // Lança o erro para ser tratado na camada superior
+    console.error('Erro ao marcar como lida:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
   }
-};
- 
+}
+
+// Remover notificação
 async function remove(req, res) {
   try {
-    await service.remove(req.params.id);
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
+
+    await service.remove(id);
     res.json({ message: 'Notificação removida' });
-  } catch {
+  } catch (err) {
+    console.error('Erro ao remover notificação:', err);
     res.status(500).json({ error: 'Erro ao remover notificação' });
   }
 }
- 
+
 module.exports = {
   create,
   list,

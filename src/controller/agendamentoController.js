@@ -24,7 +24,11 @@ const agendamentoController = {
 
   async listarTodosOsAgendamentos(req, res) {
     try {
-      const agendamentos = await Agendamento.findAll();
+      const agendamentos = await Agendamento.findAll({
+        include: [
+          { model: Usuarios, },
+        ],
+      });
       res.status(200).json(agendamentos);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -42,7 +46,7 @@ const agendamentoController = {
         agendamentos = await Agendamento.findAll({
           where: { medico_id: medico_id },
           include: [
-            { model: Usuarios, },
+            { model: Usuarios},
           ],
         });
       } else {
@@ -62,7 +66,11 @@ const agendamentoController = {
   async obterAgendamento(req, res) {
     try {
       const { id } = req.params;
-      const agendamento = await Agendamento.findByPk(id);
+      const agendamento = await Agendamento.findByPk(id, {
+        include: [
+          { model: Usuarios},
+        ],
+      });
 
       if (!agendamento) {
         return res.status(404).json({ message: 'Agendamento não encontrado' });

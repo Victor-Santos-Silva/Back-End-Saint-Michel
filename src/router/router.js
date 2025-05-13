@@ -22,11 +22,8 @@ router.use('/duvidas', duvidas);
 router.use('/paciente', usuarios);
 router.use("/admin", admRoutes);
 router.use("/medico", medicoRoutes);
-<<<<<<< HEAD
 router.use("/notificacoes", notificacaoRoutes);
-=======
 
->>>>>>> 9b592369ce20d47c1374c80f1447234b8c6004da
 router.use('/agendamento', agendamento);
 router.use('/agendamentoDocente', agendamentoDocente);
 

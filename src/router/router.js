@@ -15,6 +15,8 @@ const prontuarioDocente = require("./prontuarioDocenteRoutes.js");
 const consulta = require("./consultaRoutes");
 const consultaDocente = require("./consultaDocenteRoutes.js");
 
+const serviExtrasRotas = require("./servicosExtrasRotas.js")
+
 const router = Router();
 
 router.use('/duvidas', duvidas);
@@ -34,5 +36,7 @@ router.use('/prontuarioDocente', prontuarioDocente);
 
 router.use('/consulta', consulta)
 router.use('/consultaDocente', consultaDocente)
+
+router.use('/servicos-extras', serviExtrasRotas);
 
 module.exports = router;

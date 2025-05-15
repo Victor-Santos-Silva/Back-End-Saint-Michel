@@ -29,7 +29,7 @@ sequelize
     .authenticate()
     .then(async () => {
         console.log("Conexão com o banco de dados bem-sucedida!");
-        const PORT = process.env.PORT || 5500;
+        const PORT = process.env.PORT || 8080;
         app.listen(PORT, () => {
             console.log("---------------------------");
             console.log(`Servidor rodando em http://localhost:${PORT}`);

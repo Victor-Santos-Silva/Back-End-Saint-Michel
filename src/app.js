@@ -16,7 +16,7 @@ app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true, 
+    credentials: true,
     optionsSuccessStatus: 200
 }));
 
@@ -24,7 +24,6 @@ app.use(cors({
 app.use('/notificacoes', notificationRoutes); // Notificações originais (por user_id)
 app.use('/notificacoes-paciente', notificacaoPacienteRouter); // Novas notificações por email
 
-// Arquivos estáticos
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/pdfs', express.static(path.join(__dirname, 'pdfs')));
 
@@ -36,12 +35,7 @@ sequelize
     .authenticate()
     .then(async () => {
         console.log("Conexão com o banco de dados bem-sucedida!");
-        
-        // Sincronizar modelos (opcional, apenas para desenvolvimento)
-        await sequelize.sync({ alter: true });
-        console.log("Modelos sincronizados com o banco de dados");
-        
-        const PORT = process.env.PORT || 5500;
+        const PORT = process.env.PORT || 8080;
         app.listen(PORT, () => {
             console.log("---------------------------");
             console.log(`Servidor rodando em http://localhost:${PORT}`);

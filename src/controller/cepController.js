@@ -1,3 +1,5 @@
+const { default: axios } = require("axios");
+
 const buscarCEP = async (req, res) => {
     try {
         let { cep } = req.params;

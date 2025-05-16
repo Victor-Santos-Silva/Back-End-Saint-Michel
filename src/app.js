@@ -6,29 +6,41 @@ const path = require("path");
 const { sequelize } = require("./models");
 const app = express();
 
+// Importando as rotas
+const notificacaoPacienteRouter = require("./router/notificacaoPacienteRouter");
+const notificationRoutes = require("./router/notificationRoutes");
 
+// Configurações básicas
 app.use(express.json());
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true, 
-  optionsSuccessStatus: 200
+    optionsSuccessStatus: 200
 }));
 
+// Rotas
+app.use('/notificacoes', notificationRoutes); // Notificações originais (por user_id)
+app.use('/notificacoes-paciente', notificacaoPacienteRouter); // Novas notificações por email
 
-
-
-app.use('/notificacoes', require('./router/notificationRoutes'));
-
+// Arquivos estáticos
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/pdfs', express.static(path.join(__dirname, 'pdfs')));
+
+// Rotas principais
 app.use("/", routes);
 
+// Conexão com o banco de dados e inicialização do servidor
 sequelize
     .authenticate()
     .then(async () => {
         console.log("Conexão com o banco de dados bem-sucedida!");
+        
+        // Sincronizar modelos (opcional, apenas para desenvolvimento)
+        await sequelize.sync({ alter: true });
+        console.log("Modelos sincronizados com o banco de dados");
+        
         const PORT = process.env.PORT || 5500;
         app.listen(PORT, () => {
             console.log("---------------------------");

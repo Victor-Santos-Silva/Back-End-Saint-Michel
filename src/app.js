@@ -19,6 +19,7 @@ app.use(cors({
 
 
 
+
 app.use('/notificacoes', require('./router/notificationRoutes'));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

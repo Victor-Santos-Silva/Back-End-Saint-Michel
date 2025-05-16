@@ -4,7 +4,7 @@ const cors = require("cors");
 const routes = require("./router/router");
 const path = require("path");
 const { sequelize } = require("./models");
-const app = express();
+
 
 
 app.use(express.json());

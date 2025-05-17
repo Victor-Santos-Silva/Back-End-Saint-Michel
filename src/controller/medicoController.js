@@ -74,7 +74,7 @@ const medicoController = {
 
     create: async (req, res) => {
         try {
-            const { nome_completo, dataNascimento, cpf, crm, telefone, endereco, especialidade, nacionalidade, email_corporativo, senha_corporativa } = req.body;
+            const { nome_completo, dataNascimento, cpf, crm, telefone, endereco, especialidade, email_corporativo, senha_corporativa } = req.body;
 
             const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
@@ -109,7 +109,6 @@ const medicoController = {
                 telefone: telefoneLimpo,
                 endereco,
                 especialidade,
-                nacionalidade,
                 email_corporativo,
                 senha_corporativa,
                 foto

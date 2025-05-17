@@ -6,7 +6,11 @@ const path = require("path");
 const { sequelize } = require("./models");
 const app = express();
 
+// Importando as rotas
+const notificacaoPacienteRouter = require("./router/notificacaoPacienteRouter");
+const notificationRoutes = require("./router/notificationRoutes");
 
+// Configurações básicas
 app.use(express.json());
 app.use(cors({
     origin: '*',
@@ -16,15 +20,17 @@ app.use(cors({
     optionsSuccessStatus: 200
 }));
 
-
-
-
-app.use('/notificacoes', require('./router/notificationRoutes'));
+// Rotas
+app.use('/notificacoes', notificationRoutes); // Notificações originais (por user_id)
+app.use('/notificacoes-paciente', notificacaoPacienteRouter); // Novas notificações por email
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/pdfs', express.static(path.join(__dirname, 'pdfs')));
+
+// Rotas principais
 app.use("/", routes);
 
+// Conexão com o banco de dados e inicialização do servidor
 sequelize
     .authenticate()
     .then(async () => {

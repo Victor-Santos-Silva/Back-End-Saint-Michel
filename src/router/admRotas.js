@@ -3,7 +3,7 @@ const admController = require("../controller/admController");
 const { validateAdmin, validateAdminId } = require("../middlewares/validateAdmin")
 const router = Router();
 
-//Login ADM
+//Login ADM;
 router.post("/login", admController.login);
 
 //Cadastrar ADM

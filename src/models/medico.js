@@ -12,7 +12,17 @@ const Medico = sequelize.define("Medico", {
     dataNascimento: {
         type: DataTypes.DATEONLY,
         allowNull: false,
-        
+        validate: {
+            isDate: { msg: "Data de nascimento inválida." },
+            isValidDate(value) {
+                const data = new Date(value);
+                const hoje = new Date();
+                const idade = hoje.getFullYear() - data.getFullYear();
+
+                if (data > hoje) throw new Error("A data de nascimento não pode ser no futuro.");
+                if (idade < 21) throw new Error("O médico deve ter no mínimo 21 anos.");
+            }
+        }
     },
     cpf: {
         type: DataTypes.STRING,
@@ -43,14 +53,36 @@ const Medico = sequelize.define("Medico", {
     endereco: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+            notEmpty: { msg: "O endereço não pode estar vazio." }
+        }
     },
     especialidade: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM(
+            'Ortopedista',
+            'Proctologista',
+            'Oncologista',
+            'Otorrinolaringologista',
+            'Oftalmologista',
+            'Cardiologista',
+            'Pneumologista',
+            'Nefrologista',
+            'Gastroenterologista',
+            'Urologista',
+            'Dermatologista',
+            'Ginecologista',
+        ),
         allowNull: false,
+        validate: {
+            notEmpty: { msg: "O endereço não pode estar vazio." }
+        }
     },
     nacionalidade: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+            notEmpty: { msg: "O endereço não pode estar vazio." }
+        }
     },
     email_corporativo: {
         type: DataTypes.STRING,
@@ -63,6 +95,7 @@ const Medico = sequelize.define("Medico", {
     senha_corporativa: {
         type: DataTypes.STRING,
         allowNull: false,
+        len: { args: [6, 100], msg: "A senha deve ter no mínimo 6 caracteres." }
     },
     foto: {
         type: DataTypes.STRING, // Apenas o caminho do arquivo

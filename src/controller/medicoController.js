@@ -76,15 +76,37 @@ const medicoController = {
         try {
             const { nome_completo, dataNascimento, cpf, crm, telefone, endereco, especialidade, nacionalidade, email_corporativo, senha_corporativa } = req.body;
 
-            // Verifica se o multer salvou o arquivo corretamente
             const foto = req.file ? `/uploads/${req.file.filename}` : null;
+
+            const dominioPermitido = "@hsaintmichel.com";
+            if (!email_corporativo.endsWith(dominioPermitido)) {
+                return res.status(400).json({ message: `O email deve ser do domínio ${dominioPermitido}` });
+            }
+
+            const cpfExistente = await medicoService.findByCPF(cpf);
+            if (cpfExistente) {
+                return res.status(400).json({ message: "CPF já cadastrado." });
+            }
+
+            const crmExistente = await medicoService.findByCRM(crm);
+            if (crmExistente) {
+                return res.status(400).json({ message: "CRM já cadastrado." });
+            }
+
+            const emailExistente = await medicoService.findByEmail(email_corporativo);
+            if (emailExistente) {
+                return res.status(400).json({ message: "Email já cadastrado." });
+            }
+
+            const cpfLimpo = cpf.replace(/\D/g, '');
+            const telefoneLimpo = telefone.replace(/\D/g, '');
 
             const novoCadastroMedico = await medicoService.create({
                 nome_completo,
                 dataNascimento,
-                cpf,
+                cpf: cpfLimpo,
                 crm,
-                telefone,
+                telefone: telefoneLimpo,
                 endereco,
                 especialidade,
                 nacionalidade,
@@ -104,7 +126,7 @@ const medicoController = {
         }
     },
 
-    
+
 
     findById: async (req, res) => {
         try {
@@ -151,7 +173,7 @@ const medicoController = {
             res.status(400).json({ error: error.message });
         }
     },
-    
+
     buscarMedicosPorEspecialidade: async (req, res) => {
         const { especialidade } = req.query;  // Recebe a especialidade via query string
 

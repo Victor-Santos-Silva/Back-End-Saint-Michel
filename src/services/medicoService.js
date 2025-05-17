@@ -2,12 +2,38 @@ const Medico = require("../models/medico");
 const bcrypt = require("bcrypt");
 
 const medicoService = {
+    findByCPF: async (cpf) => {
+        try {
+            const medico = await Medico.findOne({ where: { cpf } });
+            return medico;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    findByCRM: async (crm) => {
+        try {
+            const medico = await Medico.findOne({ where: { crm } });
+            return medico;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    findByEmail: async (email) => {
+        try {
+            const medico = await Medico.findOne({ where: { email_corporativo: email } });
+            return medico;
+        } catch (error) {
+            throw error;
+        }
+    },
+
     create: async (dadosMedico) => {
         try {
             // Criptografando a senha
             const hashedSenha = await bcrypt.hash(dadosMedico.senha_corporativa, 10);
             dadosMedico.senha_corporativa = hashedSenha;
-
             // Criando o médico
             const novoMedico = await Medico.create(dadosMedico);
             return novoMedico;

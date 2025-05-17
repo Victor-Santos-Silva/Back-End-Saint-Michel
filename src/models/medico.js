@@ -74,14 +74,7 @@ const Medico = sequelize.define("Medico", {
         ),
         allowNull: false,
         validate: {
-            notEmpty: { msg: "O endereço não pode estar vazio." }
-        }
-    },
-    nacionalidade: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: { msg: "O endereço não pode estar vazio." }
+            notEmpty: { msg: "A especialidade não pode estar vazio." }
         }
     },
     email_corporativo: {

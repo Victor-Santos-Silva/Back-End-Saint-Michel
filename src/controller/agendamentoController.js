@@ -1,5 +1,4 @@
 const Agendamento = require("../models/Agendamento.js");
-const AgendamentoDocente = require("../models/agendamentoDocente.js");
 const Usuarios = require("../models/Usuario.js");
 
 const agendamentoController = {

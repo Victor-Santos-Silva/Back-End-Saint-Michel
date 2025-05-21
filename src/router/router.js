@@ -9,14 +9,12 @@ const notificacaoRoutes = require("./notificationRoutes");
 const exame = require("./exameRouter");
 const duvidas = require("./duvidasRoutes");
 const cepRoutes = require("./cepRotas"); 
-
 const prontuario = require("./prontuarioRotas");
 const prontuarioDocente = require("./prontuarioDocenteRoutes.js");
-
 const consulta = require("./consultaRoutes");
 const consultaDocente = require("./consultaDocenteRoutes.js");
-
 const serviExtrasRotas = require("./servicosExtrasRotas.js")
+const dependente = require("./dependenteRotas.js");
 
 const router = Router();
 
@@ -40,5 +38,9 @@ router.use('/consulta', consulta)
 router.use('/consultaDocente', consultaDocente)
 
 router.use('/servicos-extras', serviExtrasRotas);
+
+router.use('/dependente', dependente);
+
+
 
 module.exports = router;

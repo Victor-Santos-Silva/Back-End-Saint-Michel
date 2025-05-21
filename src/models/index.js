@@ -7,7 +7,7 @@ const AgendamentoDocente = require('./agendamentoDocente.js');
 const Prontuario = require('./Prontuario.js');
 const Medico = require('./medico.js');
 const ProntuarioDocente = require('./ProntuarioDocente.js');
-
+const Dependente = require('./DependenteAdicionado.js');
 const db = [];
 
 // dir -> listar os arquivos do diretorio
@@ -44,6 +44,9 @@ Agendamento.hasOne(Prontuario, { foreignKey: 'agendamento_id' });
 
 ProntuarioDocente.belongsTo(AgendamentoDocente, { foreignKey: 'agendamento_id' });
 AgendamentoDocente.hasOne(ProntuarioDocente, { foreignKey: 'agendamento_id' });
+
+/* Dependente.belongsTo(Usuarios, { foreignKey: 'usuario_id' });
+Usuarios.hasMany(Dependente, { foreignKey: 'usuario_id' }); */
 
 sequelize.sync();
 

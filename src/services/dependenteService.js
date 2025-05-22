@@ -38,18 +38,12 @@ const usuarioService = {
     },
     update: async (id, atualizacao) => {
         try {
-            const usuario = await Dependente.findByPk(id);
-            if (!usuario) {
-                throw new Error("Usuario não encontrado.");
+            const dependente = await Dependente.findByPk(id);
+            if (!dependente) {
+                throw new Error("Dependente não encontrado.");
             }
-
-            if (atualizacao.senha) {
-                const hashSenha = await bcrypt.hash(atualizacao.senha, 10);
-                atualizacao.senha = hashSenha;
-            }
-
-            await usuario.update(atualizacao);
-            return usuario;
+            await dependente.update(atualizacao);
+            return dependente;
         } catch (error) {
             throw new Error("Erro ao atualizar:" + error);
 
@@ -57,18 +51,12 @@ const usuarioService = {
     },
     delete: async (id) => {
         try {
-            const usuarioDeletado = await Dependente.findByPk(id);
-            if (!usuarioDeletado) {
+            const dependenteDeletado = await Dependente.findByPk(id);
+            if (!dependenteDeletado) {
                 throw new Error("Usuario não encontrado.");
             }
-
-            await Agendamento.destroy({
-                where: { usuario_id: id }
-            });
-
-            await usuarioDeletado.destroy();
+            await dependenteDeletado.destroy();
             return { msg: "Usuario removido com sucesso." }
-
         } catch (error) {
             throw error;
         }

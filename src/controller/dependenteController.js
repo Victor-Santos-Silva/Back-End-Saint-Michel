@@ -42,24 +42,78 @@ const prontuarioController = {
 
     getById: async (req, res) => {
         try {
-
+            const { id } = req.params;
+            const dependente = await dependenteService.getById(id);
+            if (dependente) {
+                res.status(200).json(dependente);
+            } else {
+                res.status(404).json({
+                    message: 'Dependente não encontrado'
+                });
+            }
         } catch (error) {
-
+            console.error('Erro no controller:', error);
+            let errorMessage = 'Erro interno no servidor';
+            if (error.name === 'SequelizeDatabaseError') {
+                errorMessage = 'Erro ao acessar o banco de dados';
+            }
+            res.status(500).json({
+                error: errorMessage,
+                details: process.env.NODE_ENV === 'development' ? error.message : undefined
+            });
         }
     },
 
     update: async (req, res) => {
         try {
-
+            const { id } = req.params;
+            const dependenteAtualizado = await dependenteService.update(id, req.body);
+            if (dependenteAtualizado) {
+                res.status(200).json({
+                    message: 'Dependente atualizado com sucesso!',
+                    dependenteAtualizado
+                });
+            } else {
+                res.status(404).json({
+                    message: 'Dependente não encontrado'
+                });
+            }
         } catch (error) {
-
+            console.error('Erro no controller:', error);
+            let errorMessage = 'Erro interno no servidor';
+            if (error.name === 'SequelizeDatabaseError') {
+                errorMessage = 'Erro ao acessar o banco de dados';
+            }
+            res.status(500).json({
+                error: errorMessage,
+                details: process.env.NODE_ENV === 'development' ? error.message : undefined
+            });
         }
     },
     delet: async (req, res) => {
         try {
-
+            const { id } = req.params;
+            const dependenteDeletado = await dependenteService.delete(id);
+            if (dependenteDeletado) {
+                res.status(200).json({
+                    message: 'Dependente deletado com sucesso!',
+                    dependenteDeletado
+                });
+            } else {
+                res.status(404).json({
+                    message: 'Dependente não encontrado'
+                });
+            }
         } catch (error) {
-
+            console.error('Erro no controller:', error);
+            let errorMessage = 'Erro interno no servidor';
+            if (error.name === 'SequelizeDatabaseError') {
+                errorMessage = 'Erro ao acessar o banco de dados';
+            }
+            res.status(500).json({
+                error: errorMessage,
+                details: process.env.NODE_ENV === 'development' ? error.message : undefined
+            });
         }
     }
 };

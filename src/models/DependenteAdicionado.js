@@ -15,17 +15,13 @@ const Dependente = sequelize.define("Dependentes", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    parentesco: {
+        type: DataTypes.ENUM('Pai', 'Mãe', 'Irmão', 'Irmã', 'Cônjuge', 'Filho', 'Filha', 'Outro'),
+        allowNull: false,
+    },
     dataNascimento: {
         type: DataTypes.DATEONLY,
         allowNull: false,
-    },
-    rg: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-            len: [7, 10],
-        },
     },
     cpf: {
         type: DataTypes.STRING,

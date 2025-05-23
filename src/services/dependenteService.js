@@ -4,14 +4,14 @@ const Usuario = require("../models/Usuario");
 const usuarioService = {
     create: async (cadastro) => {
         try {
-            const { usuario_id, nomeCompleto, dataNascimento, rg, cpf, genero, tipoSanguineo, imagemGenero } = cadastro;
+            const { usuario_id, nomeCompleto, parentesco, dataNascimento, cpf, genero, tipoSanguineo, imagemGenero } = cadastro;
 
-            if (!rg || !cpf) {
-                throw new Error("CPF ou RG inválidos.");
+            if (!cpf) {
+                throw new Error("CPF inválidos / usado.");
             }
 
             return await Dependente.create({
-                usuario_id, nomeCompleto, dataNascimento, rg, cpf, genero,
+                usuario_id, nomeCompleto, parentesco, dataNascimento, cpf, genero,
                 tipoSanguineo, imagemGenero
             });
         } catch (error) {

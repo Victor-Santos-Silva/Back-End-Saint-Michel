@@ -16,7 +16,7 @@ const consulta = require("./consultaRoutes");
 const consultaDocente = require("./consultaDocenteRoutes.js");
 const serviExtrasRotas = require("./servicosExtrasRotas.js")
 const dependente = require("./dependenteRotas.js");
-
+const agendamentoDependente = require("./agendamentoDependenteRoutes.js");
 const router = Router();
 
 router.use('/duvidas', duvidas);
@@ -42,6 +42,7 @@ router.use('/consultaDocente', consultaDocente)
 router.use('/servicos-extras', serviExtrasRotas);
 
 router.use('/dependente', dependente);
+router.use('/agendarDependente', agendamentoDependente);
 
 
 

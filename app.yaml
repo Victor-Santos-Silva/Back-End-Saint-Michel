@@ -13,4 +13,5 @@ env_variables:
   DB_USER: "root"
   DB_PASSWORD: "kbN2+j_NHeN(v*/a"
   DB_NAME: "dbsaintmichel"
-  PORT: "3306"
+
+entrypoint: node src/app.js

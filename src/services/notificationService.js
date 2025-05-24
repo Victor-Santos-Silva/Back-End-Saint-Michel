@@ -1,5 +1,5 @@
 // services/notificationService.js
-const Notificacao = require('../models/Notificacao');  // Certifique-se de importar o modelo corretamente
+const Notificacao = require('../models/notificacao');  // Certifique-se de importar o modelo corretamente
 
 async function create(data) {
   try {

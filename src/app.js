@@ -31,17 +31,17 @@ app.use('/pdfs', express.static(path.join(__dirname, 'pdfs')));
 app.use("/", routes);
 
 // Conexão com o banco de dados e inicialização do servidor
-sequelize
-    .authenticate()
-    .then(async () => {
-        console.log("Conexão com o banco de dados bem-sucedida!");
-        const PORT = process.env.PORT || 8080;
-        app.listen(PORT, () => {
-            console.log("---------------------------");
-            console.log(`Servidor rodando em http://localhost:${PORT}`);
-            console.log("---------------------------");
-        });
-    })
-    .catch((err) => {
-        console.error("Erro ao conectar ao banco de dados:", err);
-    });
+//sequelize
+//.authenticate()
+//    .then(async () => {
+console.log("Conexão com o banco de dados bem-sucedida!");
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log("---------------------------");
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
+    console.log("---------------------------");
+});
+//   })
+//    .catch((err) => {
+//        console.error("Erro ao conectar ao banco de dados:", err);
+//    });

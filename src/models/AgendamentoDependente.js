@@ -40,7 +40,7 @@ const AgendamentoDependente = sequelize.define('AgendamentoDependente', {
         defaultValue: 'pendente'
     }
 }, {
-    tableName: 'agendamentos',
+    tableName: 'AgendamentoDependente',
     timestamps: false
 });
 

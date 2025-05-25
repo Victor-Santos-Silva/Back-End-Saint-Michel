@@ -60,6 +60,11 @@ const usuarioService = {
         } catch (error) {
             throw error;
         }
+    },
+    buscarPorUsuarioId: async (usuario_id) => {
+        return await Dependente.findAll({
+            where: { usuario_id }
+        });
     }
 };
 

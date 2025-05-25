@@ -115,7 +115,31 @@ const prontuarioController = {
                 details: process.env.NODE_ENV === 'development' ? error.message : undefined
             });
         }
+    },
+    buscarPorUsuarioId: async (req, res) => {
+        try {
+            const { usuario_id } = req.params;
+            const dependentes = await dependenteService.buscarPorUsuarioId(usuario_id);
+            if (dependentes) {
+                res.status(200).json(dependentes);
+            } else {
+                res.status(404).json({
+                    message: 'Dependente não encontrado'
+                });
+            }
+        } catch (error) {
+            console.error('Erro no controller:', error);
+            let errorMessage = 'Erro interno no servidor';
+            if (error.name === 'SequelizeDatabaseError') {
+                errorMessage = 'Erro ao acessar o banco de dados';
+            }
+            res.status(500).json({
+                error: errorMessage,
+                details: process.env.NODE_ENV === 'development' ? error.message : undefined
+            });
+        }
     }
+
 };
 
 module.exports = prontuarioController;

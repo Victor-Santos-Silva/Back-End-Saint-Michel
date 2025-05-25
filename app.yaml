@@ -9,9 +9,12 @@ automatic_scaling:
   max_instances: 3
 
 env_variables:
-  DB_HOST: "35.247.205.174"
+  DB_HOST: "hospital-saint-michel-460809:southamerica-east1:dbsaintmichel"
   DB_USER: "root"
   DB_PASSWORD: "kbN2+j_NHeN(v*/a"
   DB_NAME: "dbsaintmichel"
 
-entrypoint: node src/app.js
+beta_settings:
+  cloud_sql_instances: hospital-saint-michel-460809:southamerica-east1:dbsaintmichel
+
+entrypoint: node src/server.js

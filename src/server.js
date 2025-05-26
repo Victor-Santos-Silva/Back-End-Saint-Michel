@@ -1,16 +1,18 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const routes = require("./router/router");
 const path = require("path");
 const { sequelize } = require("./models");
+
 const app = express();
 
-// Importando as rotas
+// Rotas principais
+const routes = require("./router/router");
 const notificacaoPacienteRouter = require("./router/notificacaoPacienteRouter");
 const notificationRoutes = require("./router/notificationRoutes");
+const chatbotRoutes = require("./router/chatbotRoutes"); // 🔹 Chatbot
 
-// Configurações básicas
+// Middlewares
 app.use(express.json());
 app.use(cors({
     origin: '*',
@@ -20,17 +22,20 @@ app.use(cors({
     optionsSuccessStatus: 200
 }));
 
-// Rotas
-app.use('/notificacoes', notificationRoutes); // Notificações originais (por user_id)
-app.use('/notificacoes-paciente', notificacaoPacienteRouter); // Novas notificações por email
-
+// Servir arquivos estáticos
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/pdfs', express.static(path.join(__dirname, 'pdfs')));
+app.use('/public', express.static(path.join(__dirname, 'public'))); // Caso use pasta public
 
-// Rotas principais
-app.use("/", routes);
+// 🔹 Rotas do chatbot
+app.use('/api/chatbot', chatbotRoutes);
 
-// Conexão com o banco de dados e inicialização do servidor
+// 🔹 Suas rotas existentes
+app.use('/notificacoes', notificationRoutes);
+app.use('/notificacoes-paciente', notificacaoPacienteRouter);
+app.use('/', routes);
+
+// Banco de dados e inicialização
 sequelize
     .authenticate()
     .then(async () => {

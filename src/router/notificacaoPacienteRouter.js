@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const notificacaoPacienteController = require("../controller/notificacaoPacienteController");
-const validacoes = require("../middlewares/notificaacaoPacienteValidator");
+const validacoes = require("../middlewares/notificacaoPacienteValidator");
 
 router.post("/", validacoes.criar, notificacaoPacienteController.criar);
 router.get("/:email", notificacaoPacienteController.listarPorEmail);

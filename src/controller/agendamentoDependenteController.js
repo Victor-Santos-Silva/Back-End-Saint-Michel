@@ -2,6 +2,7 @@ const AgendamentoDependente = require("../models/AgendamentoDependente.js");
 const Medico = require("../models/medico.js");
 const Usuarios = require("../models/Usuario.js");
 const Dependente = require("../models/DependenteAdicionado.js");
+const Usuario = require("../models/Usuario.js");
 const agendamentoController = {
     async create(req, res) {
         try {
@@ -85,7 +86,32 @@ const agendamentoController = {
             console.error("Erro ao deletar agendamento:", error);
             res.status(500).json({ error: error.message });
         }
-    }
+    },
+
+    async listarAgendamentosDependente(req, res) {
+        try {
+            const { medico_id } = req.query;
+            let agendamentoDependente;
+
+            if (medico_id) {
+                agendamentoDependente = await AgendamentoDependente.findAll({
+                    where: { medico_id: medico_id },
+                    include: [{ model: Usuario }], // Apenas incluir relacionamentos válidos
+                });
+            } else {
+                agendamentoDependente = await AgendamentoDependente.findAll({
+                    include: [{ model: Usuario }], // Incluir o usuário sempre
+                });
+            }
+
+            res.status(200).json({ agendamentoDependente: agendamentoDependente });
+        } catch (error) {
+            console.error("Erro ao listar agendamento:", error);
+            res.status(500).json({ error: error.message });
+        }
+    },
+
+
 };
 
 module.exports = agendamentoController; 

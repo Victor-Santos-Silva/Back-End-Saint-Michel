@@ -4,6 +4,7 @@ const agendamentoDependenteController = require('../controller/agendamentoDepend
 
 router.post('/', agendamentoDependenteController.create);
 router.get('/', agendamentoDependenteController.getAll);
+router.get('/agendamentoGeralDependente', agendamentoDependenteController.listarAgendamentosDependente);
 router.get('/:id', agendamentoDependenteController.getById);
 router.put('/:id', agendamentoDependenteController.update);
 router.delete('/:id', agendamentoDependenteController.delet);

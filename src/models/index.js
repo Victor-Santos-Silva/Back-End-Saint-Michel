@@ -29,12 +29,12 @@ Object.keys(db).forEach(modelName => {
 );
 
 Agendamento.belongsTo(Usuarios, { foreignKey: 'usuario_id' });
-Usuarios.hasMany(Agendamento, { foreignKey: 'usuario_id'});
+Usuarios.hasMany(Agendamento, { foreignKey: 'usuario_id' });
 
-AgendamentoDocente.belongsTo(Usuarios, { foreignKey: 'usuario_id' }); 
+AgendamentoDocente.belongsTo(Usuarios, { foreignKey: 'usuario_id' });
 Usuarios.hasMany(AgendamentoDocente, { foreignKey: 'usuario_id' });
 
-Prontuario.belongsTo(Usuarios, { foreignKey: 'usuario_id' }); 
+Prontuario.belongsTo(Usuarios, { foreignKey: 'usuario_id' });
 Usuarios.hasMany(Prontuario, { foreignKey: 'usuario_id' });
 
 Agendamento.belongsTo(Medico, { foreignKey: 'medico_id' });
@@ -51,6 +51,10 @@ Usuarios.hasMany(Dependente, { foreignKey: 'usuario_id' });
 
 AgendamentoDependente.belongsTo(Usuarios, { foreignKey: 'usuario_id' });
 Usuarios.hasMany(AgendamentoDependente, { foreignKey: 'usuario_id' });
+
+AgendamentoDependente.belongsTo(Dependente, { foreignKey: 'dependente_id' });
+Dependente.hasMany(AgendamentoDependente, { foreignKey: 'dependente_id' });
+
 
 sequelize.sync();
 

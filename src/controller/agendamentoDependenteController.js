@@ -1,12 +1,14 @@
 const AgendamentoDependente = require("../models/AgendamentoDependente.js");
 const Medico = require("../models/medico.js");
+const Usuarios = require("../models/Usuario.js");
 const Dependente = require("../models/DependenteAdicionado.js");
 const agendamentoController = {
     async create(req, res) {
         try {
+            const usuario_id = req.user.id;
             const { especialidade, medico_id, dependente_id, data, hora } = req.body;
             const agendamento = await AgendamentoDependente.create({
-                usuario_id: req.usuarioId,
+                usuario_id,
                 especialidade,
                 medico_id,
                 dependente_id,

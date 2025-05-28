@@ -12,8 +12,10 @@ const duvidas = require("./duvidasRoutes");
 const cepRoutes = require("./cepRotas");
 const prontuario = require("./prontuarioRotas");
 const prontuarioDocente = require("./prontuarioDocenteRoutes.js");
+const prontuarioDependente = require("./prontuarioDependenteRoutes.js");
 const consulta = require("./consultaRoutes");
 const consultaDocente = require("./consultaDocenteRoutes.js");
+const consultaDependente = require("./consultaDependenteRoutes.js");
 const serviExtrasRotas = require("./servicosExtrasRotas.js");
 const dependente = require("./dependenteRotas.js");
 const agendamentoDependente = require("./agendamentoDependenteRoutes.js");
@@ -37,16 +39,18 @@ router.use('/exame', exame);
 router.use('/cep', cepRoutes);
 
 router.use('/prontuario', prontuario);
+router.use('/prontuarioDependente', prontuarioDependente);
 router.use('/prontuarioDocente', prontuarioDocente);
 
 router.use('/consulta', consulta)
 router.use('/consultaDocente', consultaDocente)
+router.use('/consultaDependente', consultaDependente)
 
 router.use('/servicos-extras', serviExtrasRotas);
 
 router.use('/dependente', dependente);
 router.use('/agendarDependente', agendamentoDependente);
 
-router.use('/chatbot', chatbotRoutes); 
+router.use('/chatbot', chatbotRoutes);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const AgendamentoDependente = require('../models/AgendamentoDependente');
+const Dependente = require('../models/DependenteAdicionado');
 const ProntuarioDependente = require('../models/ProntuarioDependente');
 const Usuario = require('../models/Usuario'); // Se necessário para histórico
 const { Op } = require('sequelize');
@@ -73,7 +74,8 @@ const consultaDocenteService = {
       },
       include: [
         { model: ProntuarioDependente },
-        { model: Usuario, as: 'usuario' } // Ajuste o alias se necessário
+        { model: Usuario, as: 'usuario' }, // Ajuste o alias se necessário
+        { model: Dependente } // Ajuste o alias se necessário
       ]
     });
 

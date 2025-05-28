@@ -57,6 +57,7 @@ const agendamentoController = {
             const agendamento = await AgendamentoDependente.findByPk(id, {
                 include: [
                     { model: Usuarios },
+                    { model: Dependente },
                 ],
             });
 
@@ -65,7 +66,7 @@ const agendamentoController = {
             }
 
             res.status(200).json({
-                AgendamentosUsuarios: agendamento
+                AgendamentoDependente: agendamento
             });
         } catch (error) {
             console.error("Erro ao obter agendamento:", error);

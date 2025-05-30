@@ -14,7 +14,7 @@ const transport = nodemailer.createTransport({
         pass: 'skixwmgfyglzfpwu' // Substitua por variável de ambiente em produção
     }
 });
-
+''
 // Armazenamento temporário de códigos
 const verificationCodes = {};
 

@@ -7,9 +7,12 @@ const sequelize = new Sequelize(
     process.env.DB_PASSWORD,
     {
         host: process.env.DB_HOST,
-        dialect: 'mysql',
-        /* dialectOptions: {
-            socketPath: `/cloudsql/${process.env.DB_HOST}`
-        } */
+        dialect: 'mssql',
+        dialectOptions: {
+            options: {
+                encrypt: true, // Use encryption for Azure SQL Database
+                trustServerCertificate: false, // Change to false in production
+            },
+        }
     });
 module.exports = sequelize;

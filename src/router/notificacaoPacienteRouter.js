@@ -4,7 +4,7 @@ const notificacaoPacienteController = require("../controller/notificacaoPaciente
 const validacoes = require("../middlewares/notificacaoPacienteValidator");
 
 router.post("/", validacoes.criar, notificacaoPacienteController.criar);
-router.get("/:email", notificacaoPacienteController.listarPorEmail);
+router.get("/notificacoesPaciente/:email", notificacaoPacienteController.listarPorEmail);
 router.patch("/marcar-lida/:id", validacoes.marcarComoLida, notificacaoPacienteController.marcarComoLida);
 router.delete("/:id", validacoes.deletar, notificacaoPacienteController.deletar);
 

@@ -12,7 +12,7 @@ router.get('/:id', usuarioController.getOne);
 
 router.put('/:id', usuarioController.update);
 
-router.patch('/esqueciSenha', usuarioController.esqueciSenha);
+router.patch('/esqueci-senha', usuarioController.esqueciSenha);
 
 router.delete('/:id', usuarioController.delete);
 

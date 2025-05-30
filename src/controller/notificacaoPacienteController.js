@@ -1,4 +1,6 @@
 const notificacaoPacienteService = require("../services/notificacaoPacienteService");
+const { Notificacao } = require('../models/notificacaoPaciente');
+const { createSchema } = require('../middlewares/notificacaoPacienteValidator');
 
 class NotificacaoPacienteController {
   async criar(req, res) {

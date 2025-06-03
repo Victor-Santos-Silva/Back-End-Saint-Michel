@@ -3,7 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const { sequelize } = require("./models");
-
+const { Router } = require("express");
+const router = Router();
 const app = express();
 
 // Rotas principais
@@ -35,7 +36,7 @@ app.use('/notificacoes', notificationRoutes);
 app.use('/notificacoes-paciente', notificacaoPacienteRouter);
 app.use('/', routes);
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.send('API Saint Michel está rodando!');
 });
 

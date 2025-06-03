@@ -35,6 +35,10 @@ app.use('/notificacoes', notificationRoutes);
 app.use('/notificacoes-paciente', notificacaoPacienteRouter);
 app.use('/', routes);
 
+app.get('/', (req, res) => {
+  res.send('API Saint Michel está rodando!');
+});
+
 // Banco de dados e inicialização
 sequelize
     .authenticate()

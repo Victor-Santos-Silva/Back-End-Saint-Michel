@@ -6,8 +6,7 @@ const Usuario = require("../models/Usuario.js");
 const agendamentoController = {
     async create(req, res) {
         try {
-            const usuario_id = req.user.id;
-            const { especialidade, medico_id, dependente_id, data, hora } = req.body;
+            const { usuario_id, especialidade, medico_id, dependente_id, data, hora } = req.body;
             const agendamento = await AgendamentoDependente.create({
                 usuario_id,
                 especialidade,

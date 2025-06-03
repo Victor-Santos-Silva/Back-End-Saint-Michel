@@ -1,7 +1,7 @@
 const medicoService = require("../services/medicoService");
 const Medico = require("../models/medico");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const medicoController = {
     login: async (req, res) => {

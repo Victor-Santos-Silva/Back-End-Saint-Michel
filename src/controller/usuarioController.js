@@ -1,7 +1,7 @@
 const usuarioService = require("../services/usuarioService");
 const Usuario = require("../models/Usuario");
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 
 // Configuração do Nodemailer

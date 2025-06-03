@@ -1,5 +1,5 @@
 const Adm = require("../models/adm");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const admService = {
     create: async (cadastro) => {

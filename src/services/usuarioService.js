@@ -1,6 +1,6 @@
 const Agendamento = require("../models/Agendamento");
 const Usuario = require("../models/Usuario");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const usuarioService = {
     create: async (cadastro) => {

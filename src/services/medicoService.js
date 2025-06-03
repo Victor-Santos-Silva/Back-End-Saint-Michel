@@ -1,5 +1,5 @@
 const Medico = require("../models/medico");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const medicoService = {
     findByCPF: async (cpf) => {

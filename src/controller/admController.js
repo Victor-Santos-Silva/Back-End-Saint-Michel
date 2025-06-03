@@ -1,7 +1,7 @@
 const admService = require("../services/admService");
 const Admin = require("../models/adm");
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const admController = {
     login: async (req, res) => {

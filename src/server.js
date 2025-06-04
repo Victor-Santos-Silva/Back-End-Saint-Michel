@@ -9,7 +9,6 @@ const app = express();
 
 // Rotas principais
 const routes = require("./router/router");
-const notificacaoPacienteRouter = require("./router/notificacaoPacienteRouter");
 const notificationRoutes = require("./router/notificationRoutes");
 const chatbotRoutes = require("./router/chatbotRoutes"); // 🔹 Chatbot
 
@@ -33,7 +32,6 @@ app.use('/api/chatbot', chatbotRoutes);
 
 // 🔹 Suas rotas existentes
 app.use('/notificacoes', notificationRoutes);
-app.use('/notificacoes-paciente', notificacaoPacienteRouter);
 app.use('/', routes);
 
 app.get('/', (req, res) => {

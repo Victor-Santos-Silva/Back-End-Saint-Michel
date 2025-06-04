@@ -6,7 +6,6 @@ const agendamento = require("./agendamentoRoutes");
 const agendamentoDocente = require("./agendamentoDocenteRoutes");
 const contato = require("./contatoRouter");
 const notificacaoRoutes = require("./notificationRoutes");
-const notificacaoPacienteRouter = require("./notificacaoPacienteRouter.js");
 const exame = require("./exameRouter");
 const duvidas = require("./duvidasRoutes");
 const cepRoutes = require("./cepRotas");
@@ -29,7 +28,6 @@ router.use('/paciente', usuarios);
 router.use("/admin", admRoutes);
 router.use("/medico", medicoRoutes);
 router.use("/notificacoes", notificacaoRoutes);
-router.use("/notificacoesPaciente", notificacaoPacienteRouter);
 
 router.use('/agendamento', agendamento);
 router.use('/agendamentoDocente', agendamentoDocente);

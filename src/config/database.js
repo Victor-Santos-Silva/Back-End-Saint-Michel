@@ -1,19 +1,11 @@
 const { Sequelize } = require('sequelize');
+const config = require('../config/config')[process.env.NODE_ENV || 'development'];
 require('dotenv').config();
 
 const sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
-    {
-        host: process.env.DB_HOST,
-        dialect: 'mssql',
-        dialectOptions: {
-            options: {
-                encrypt: true, // Obrigatório para Azure SQL
-                trustServerCertificate: false, // Correto para produção
-            }
-        }
-    }
+    config.database,
+    config.username,
+    config.password,
+    config
 );
 module.exports = sequelize;

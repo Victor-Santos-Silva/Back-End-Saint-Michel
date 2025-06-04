@@ -36,7 +36,7 @@ app.use('/notificacoes', notificationRoutes);
 app.use('/notificacoes-paciente', notificacaoPacienteRouter);
 app.use('/', routes);
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.send('API Saint Michel está rodando!');
 });
 

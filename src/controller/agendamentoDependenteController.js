@@ -96,7 +96,7 @@ const agendamentoController = {
             if (medico_id) {
                 agendamentoDependente = await AgendamentoDependente.findAll({
                     where: { medico_id: medico_id },
-                    include: [{ model: Usuario }], // Apenas incluir relacionamentos válidos
+                    include: [{ model: Usuario }, { model: Dependente }], // Apenas incluir relacionamentos válidos
                 });
             } else {
                 agendamentoDependente = await AgendamentoDependente.findAll({

@@ -1,5 +1,5 @@
 require('dotenv').config();
- 
+
 const commonConfig = {
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -8,7 +8,7 @@ const commonConfig = {
   dialect: process.env.DB_DIALECT || 'mysql', // default para dev
   port: process.env.PORT || 3306,
 };
- 
+
 module.exports = {
   development: {
     ...commonConfig,
@@ -18,6 +18,7 @@ module.exports = {
   production: {
     ...commonConfig,
     dialect: 'mssql',
+    port: 1433,
     dialectOptions: {
       options: {
         encrypt: true,

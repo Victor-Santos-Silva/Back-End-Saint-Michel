@@ -31,7 +31,6 @@ const usuarioService = {
         const hashSenha = await bcrypt.hash(senhaNova, 10);
         await usuario.update({ senha: hashSenha });
         return usuario;
-
     },
     getById: async (id) => {
         try {

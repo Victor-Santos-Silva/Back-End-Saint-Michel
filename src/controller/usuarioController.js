@@ -99,7 +99,7 @@ const usuarioController = {
         }
     },
 
-    enviarCodigo: async (req, res) => {
+    envi: async (req, res) => {
         const { email } = req.body;
 
         if (!email) {
@@ -115,16 +115,37 @@ const usuarioController = {
         }
     },
 
-    esqueciSenha: async (req, res) => {
-        const { email, senhaNova, codigo } = req.body;
+    /* esqueciSenha: async (req, res) => {
+        const { email, senhaNova } = req.body;
 
-        if (!email || !senhaNova || !codigo) {
+        if (!email || !senhaNova ||) {
             return res.status(400).json({ msg: "Email, nova senha e código são obrigatórios" });
         }
 
-        const resultado = verifyCode(email, codigo);
+        const resultado = verifyCode(email);
         if (!resultado.valid) {
             return res.status(400).json({ msg: resultado.reason });
+        }
+
+        try {
+            const usuario = await usuarioService.esqueciSenha(email, senhaNova);
+            if (!usuario) {
+                return res.status(400).json({ msg: "Usuário não encontrado" });
+            }
+
+            return res.status(200).json({
+                msg: "Senha atualizada com sucesso",
+                usuario
+            });
+        } catch (error) {
+            return res.status(500).json({ msg: error.message || "Erro ao atualizar a senha" });
+        }
+    }, */
+    esqueciSenha: async (req, res) => {
+        const { email, senhaNova } = req.body;
+
+        if (!email || !senhaNova) {
+            return res.status(400).json({ msg: "Email, nova senha e código são obrigatórios" });
         }
 
         try {

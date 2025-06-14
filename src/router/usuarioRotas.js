@@ -10,9 +10,9 @@ router.get('/', usuarioController.getAll);
 
 router.get('/:id', usuarioController.getOne);
 
-router.put('/:id', usuarioController.update);
+//router.put('/:id', usuarioController.update);
 
-router.patch('/esqueci-senha', usuarioController.esqueciSenha);
+//router.patch('/esqueci-senha', usuarioController.esqueciSenha);
 
 router.delete('/:id', usuarioController.delete);
 

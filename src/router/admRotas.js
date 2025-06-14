@@ -20,7 +20,7 @@ router.get('/:id', validateAdminId, admController.getOne);
 router.put('/:id', validateAdminId, admController.update);
 
 //funçao de esqueci senha
-router.patch('/esqueciSenha', admController.esqueciSenha)
+router.patch('/esqueciSenha')//admController.esqueciSenha)
 
 router.delete('/:id', validateAdminId, admController.delete);
 

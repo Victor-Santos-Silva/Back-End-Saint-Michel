@@ -41,7 +41,7 @@ const admController = {
         }
     },
 
-    esqueciSenha: async (req, res) => {
+    /* esqueciSenha: async (req, res) => {
         const { email, novaSenha } = req.body;
 
         // Validação básica dos campos
@@ -67,7 +67,7 @@ const admController = {
                 msg: error.message || "Erro ao atualizar o Admin",
             });
         }
-    },
+    }, */
 
     create: async (req, res) => {
         try {

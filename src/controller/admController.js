@@ -71,10 +71,10 @@ const admController = {
 
     create: async (req, res) => {
         try {
-            const novoCadastroAdm = await admService.create(req.body);
+            //const novoCadastroAdm = await admService.create(req.body);
             res.status(201).json({
                 mensagem: 'Admin criado com sucesso.',
-                data: novoCadastroAdm
+                //data: novoCadastroAdm
             })
 
         } catch (error) {

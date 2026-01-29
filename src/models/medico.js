@@ -52,7 +52,10 @@ const Medico = sequelize.define("Medico", {
     },
     endereco: {
         type: DataTypes.STRING,
-        
+        allowNull: false,
+        validate: {
+            notEmpty: { msg: "O endereço não pode estar vazio." }
+        }
     },
     especialidade: {
         type: DataTypes.ENUM(

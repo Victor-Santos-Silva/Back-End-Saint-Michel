@@ -7,7 +7,7 @@ const router = Router();
 router.post("/login", admController.login);
 
 //Cadastrar ADM
-//router.post("/cadastro", validateAdmin, admController.create);
+router.post("/cadastro", validateAdmin, admController.create);
 
 
 //busca todos os admins

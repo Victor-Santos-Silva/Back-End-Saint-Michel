@@ -1,27 +1,53 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
-const AdmModel = sequelize.define("Adm", {
+const AdmModel = sequelize.define(
+  "Adm",
+  {
     nome: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      type: DataTypes.STRING(120),
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: [3, 120],
+      },
     },
+
     email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-            isEmail: {
-                msg: 'E-mail inválido'
-            }
-        }
+      type: DataTypes.STRING(150),
+      allowNull: false,
+      unique: true,
+      set(value) {
+        this.setDataValue("email", value.toLowerCase().trim());
+      },
+      validate: {
+        isEmail: true,
+        notEmpty: true,
+      },
     },
+
     senha: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    }
-}, {
-    timestamps: true
-});
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      validate: {
+        len: [60, 255],
+      },
+    },
+
+    ativo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+
+    ultimoLogin: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+  },
+  {
+    timestamps: true,
+    indexes: [{ unique: true, fields: ["email"] }],
+  },
+);
 
 module.exports = AdmModel;

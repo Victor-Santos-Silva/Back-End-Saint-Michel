@@ -24,10 +24,10 @@ router.get("/", validateMedicoId, medicoController.findAll);
 router.get("/:id", validateMedicoId, medicoController.findById);
 
 //
-//router.patch('/esqueciSenha', medicoController.esqueciSenha)
+router.patch('/esqueciSenha', medicoController.esqueciSenha)
 
 // Atualizar dados do médico
-//router.put("/:id", upload.single("foto"), authenticateToken, validateMedicoId, medicoController.update);
+router.put("/:id", upload.single("foto"), authenticateToken, validateMedicoId, medicoController.update);
 
 // Deletar médico por ID
 router.delete("/:id", authenticateToken, validateMedicoId, medicoController.delete);

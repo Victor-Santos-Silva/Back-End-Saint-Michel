@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const AgendamentoDocente = sequelize.define('AgendamentoDocente', {
-    usuario_id: { // Quem fez o AgendamentoDocente
+const AgendamentoTitular = sequelize.define('AgendamentoTitular', {
+    usuario_id: { // Quem fez o AgendamentoTitular
         type: DataTypes.INTEGER,
         allowNull: false,
         references: { model: 'usuarios', key: 'id' }
@@ -91,4 +91,4 @@ const AgendamentoDocente = sequelize.define('AgendamentoDocente', {
     timestamps: true
 });
 
-module.exports = AgendamentoDocente;
+module.exports = AgendamentoTitular;

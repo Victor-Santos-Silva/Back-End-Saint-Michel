@@ -1,11 +1,11 @@
-const prontuarioDocenteService = require("../services/prontuarioTitularService");
+const prontuariotitularService = require("../services/prontuarioTitularService");
 
-const prontuarioDocenteController = {
+const prontuariotitularController = {
     create: async (req, res) => {
         try {
             const { problemaRelatado, recomendacaoMedico } = req.body;
 
-            const novoCadastro = await prontuarioDocenteService.create({
+            const novoCadastro = await prontuariotitularService.create({
                 problemaRelatado,
                 recomendacaoMedico
             });
@@ -19,7 +19,7 @@ const prontuarioDocenteController = {
 
     getAll: async (req, res) => {
         try {
-            const prontuario = await prontuarioDocenteService.getAll();
+            const prontuario = await prontuariotitularService.getAll();
             return res.status(200).json({
                 msg: 'Todos os prontuarios!',
                 prontuario
@@ -34,7 +34,7 @@ const prontuarioDocenteController = {
 
     getOne: async (req, res) => {
         try {
-            const prontuario = await prontuarioDocenteService.getById(req.params.id);
+            const prontuario = await prontuariotitularService.getById(req.params.id);
             if (!prontuario) {
                 return res.status(404).json({
                     msg: 'Prontuario não encontrado!'
@@ -54,7 +54,7 @@ const prontuarioDocenteController = {
     delete: async (req, res) => {
         try {
             const { id } = req.params;
-            const deletado = await prontuarioDocenteService.delete(id);
+            const deletado = await prontuariotitularService.delete(id);
             res.status(200).json(deletado);
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -62,4 +62,4 @@ const prontuarioDocenteController = {
     }
 };
 
-module.exports = prontuarioDocenteController;
+module.exports = prontuariotitularController;

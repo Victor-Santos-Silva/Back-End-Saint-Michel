@@ -1,12 +1,12 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
-const ProntuarioDocente = sequelize.define("ProntuarioDocente", {
+const ProntuarioTitular = sequelize.define("ProntuarioTitular", {
     agendamento_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'agendamentodocentes',
+            model: 'agendamentoTitulars',
             key: 'id'
         }
     },
@@ -28,7 +28,7 @@ const ProntuarioDocente = sequelize.define("ProntuarioDocente", {
     }
 }, {
     timestamps: true,
-    tableName: "ProntuarioDocentes",
+    tableName: "ProntuarioTitulars",
 });
 
-module.exports = ProntuarioDocente;
+module.exports = ProntuarioTitular;

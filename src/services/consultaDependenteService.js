@@ -4,7 +4,7 @@ const ProntuarioDependente = require('../models/ProntuarioDependente');
 const Usuario = require('../models/Usuario'); // Se necessário para histórico
 const { Op } = require('sequelize');
 
-const consultaDocenteService = {
+const consultaTitularService = {
   async concluirConsultaParente({ agendamento_id, problemaRelatado, recomendacaoMedico }) {
     // Buscar o agendamento no modelo AgendamentoDependente para garantir consistência
     const agendamento = await AgendamentoDependente.findByPk(agendamento_id);
@@ -85,4 +85,4 @@ const consultaDocenteService = {
 
 };
 
-module.exports = consultaDocenteService;
+module.exports = consultaTitularService;

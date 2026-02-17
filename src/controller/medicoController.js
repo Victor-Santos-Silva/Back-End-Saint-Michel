@@ -1,5 +1,5 @@
 const medicoService = require("../services/medicoService");
-const Medico = require("../models/medico");
+const Medico = require("../models/Medico");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 

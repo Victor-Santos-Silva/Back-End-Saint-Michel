@@ -1,10 +1,10 @@
-const ProntuarioDocente = require("../models/ProntuarioDocente");
+const Prontuariotitular = require("../models/Prontuariotitular");
 const Usuario = require("../models/Usuario");
 
 const prontuarioService = {
     create: async ({ problemaRelatado, recomendacaoMedico }) => {
         try {
-            return await ProntuarioDocente.create({
+            return await Prontuariotitular.create({
                 problemaRelatado,
                 recomendacaoMedico
             });
@@ -16,7 +16,7 @@ const prontuarioService = {
 
     getAll: async () => {
         try {
-            return await ProntuarioDocente.findAll({
+            return await Prontuariotitular.findAll({
                 include: [
                     {
                         model: Usuario,
@@ -33,7 +33,7 @@ const prontuarioService = {
 
     getById: async (id) => {
         try {
-            return await ProntuarioDocente.findByPk(id, {
+            return await Prontuariotitular.findByPk(id, {
                 include: [
                     {
                         model: Usuario,
@@ -50,7 +50,7 @@ const prontuarioService = {
 
     delete: async (id) => {
         try {
-            const ProntuarioDeletado = await ProntuarioDocente.findByPk(id);
+            const ProntuarioDeletado = await Prontuariotitular.findByPk(id);
             if (!ProntuarioDeletado) {
                 throw new Error("Prontuario não encontrado.");
             }

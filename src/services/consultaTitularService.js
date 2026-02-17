@@ -1,24 +1,24 @@
-const AgendamentoDocente = require('../models/agendamentoDocente');
-const ProntuarioDocente = require('../models/ProntuarioDocente');
+const AgendamentoTitular = require('../models/agendamentoTitular');
+const ProntuarioTitular = require('../models/ProntuarioTitular');
 const Usuario = require('../models/Usuario'); // Se necessário para histórico
 const { Op } = require('sequelize');
 
 const consultaDocenteService = {
   async concluirConsultaParente({ agendamento_id, problemaRelatado, recomendacaoMedico }) {
-    // Buscar o agendamento no modelo AgendamentoDocente para garantir consistência
-    const agendamento = await AgendamentoDocente.findByPk(agendamento_id);
+    // Buscar o agendamento no modelo AgendamentoTitular para garantir consistência
+    const agendamento = await AgendamentoTitular.findByPk(agendamento_id);
     if (!agendamento) {
       throw new Error('Agendamento não encontrado.');
     }
     // Criar um novo prontuário vinculado ao agendamento
-    await ProntuarioDocente.create({
+    await ProntuarioTitular.create({
       agendamento_id,  // Associando o prontuário com o agendamento
       problemaRelatado,
       recomendacaoMedico
     });
     console.log('Novo prontuário criado');
     // Atualizar o agendamento para finalizado
-    await AgendamentoDocente.update(
+    await AgendamentoTitular.update(
       { status: 'finalizado' },
       { where: { id: agendamento_id } }
     );
@@ -28,23 +28,23 @@ const consultaDocenteService = {
   },
 
   async marcarComoNaoCompareceuParente(agendamento_id) {
-    const agendamento = await AgendamentoDocente.findByPk(agendamento_id);
+    const agendamento = await AgendamentoTitular.findByPk(agendamento_id);
     if (!agendamento) {
       throw new Error('Agendamento não encontrado.');
     }
 
-    await AgendamentoDocente.update(
+    await AgendamentoTitular.update(
       { status: 'nao_compareceu' },
       { where: { id: agendamento_id } }
     );
 
     // Verifica se já tem prontuário
-    const prontuarioExistente = await ProntuarioDocente.findOne({
+    const prontuarioExistente = await ProntuarioTitular.findOne({
       where: { agendamento_id }
     });
 
     if (!prontuarioExistente) {
-      await ProntuarioDocente.create({
+      await ProntuarioTitular.create({
         agendamento_id,
         problemaRelatado: 'Paciente não compareceu.',
         recomendacaoMedico: 'Reagendar.',
@@ -56,7 +56,7 @@ const consultaDocenteService = {
 
 
   async listarHistoricoParente() {
-    const consultasFinalizadas = await AgendamentoDocente.findAll({
+    const consultasFinalizadas = await AgendamentoTitular.findAll({
       where: {
         [Op.or]: [
           { status: 'finalizado' },
@@ -64,7 +64,7 @@ const consultaDocenteService = {
         ]
       },
       include: [
-        { model: ProntuarioDocente },
+        { model: ProntuarioTitular },
         { model: Usuario, as: 'usuario' } // Ajuste o alias se necessário
       ]
     });

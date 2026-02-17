@@ -1,4 +1,4 @@
-const prontuarioDocenteService = require("../services/prontuarioDocenteService");
+const prontuarioDocenteService = require("../services/prontuarioTitularService");
 
 const prontuarioDocenteController = {
     create: async (req, res) => {

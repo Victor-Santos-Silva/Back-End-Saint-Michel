@@ -1,9 +1,9 @@
-const consultaDocenteService = require('../services/consultaDocenteService.js');
+const consultaTitularService = require('../services/consultaTitularService.js');
 
 //parente
 exports.concluirConsultaParente = async (req, res) => {
   try {
-    const data = await consultaDocenteService.concluirConsultaParente(req.body);
+    const data = await consultaTitularService.concluirConsultaParente(req.body);
     res.status(200).json({
       message: data.message,
       status: 'finalizado'
@@ -16,7 +16,7 @@ exports.concluirConsultaParente = async (req, res) => {
 
 exports.naoCompareceuParente = async (req, res) => {
   try {
-    await consultaDocenteService.marcarComoNaoCompareceuParente(req.body.agendamento_id);
+    await consultaTitularService.marcarComoNaoCompareceuParente(req.body.agendamento_id);
     res.status(200).json({ message: 'Paciente marcado como não compareceu' });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -25,7 +25,7 @@ exports.naoCompareceuParente = async (req, res) => {
 
 exports.listarHistoricoParente = async (req, res) => {
   try {
-    const historico = await consultaDocenteService.listarHistoricoParente();
+    const historico = await consultaTitularService.listarHistoricoParente();
     res.status(200).json(historico);
   } catch (error) {
     res.status(500).json({ error: error.message });

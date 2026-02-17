@@ -1,5 +1,5 @@
 const AgendamentoDependente = require("../models/AgendamentoDependente.js");
-const Medico = require("../models/medico.js");
+const Medico = require("../models/Medico.js");
 const Usuarios = require("../models/Usuario.js");
 const Dependente = require("../models/DependenteAdicionado.js");
 const Usuario = require("../models/Usuario.js");

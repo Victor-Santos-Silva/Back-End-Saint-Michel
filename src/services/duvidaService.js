@@ -1,4 +1,4 @@
-const Duvidas = require("../models/duvidas");
+const Duvidas = require("../models/Duvida");
 
 const duvidasService = {
     create: async (duvidaData) => {

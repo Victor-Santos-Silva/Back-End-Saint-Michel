@@ -1,4 +1,4 @@
-const Medico = require("../models/medico");
+const Medico = require("../models/Medico");
 const bcrypt = require("bcryptjs");
 
 const medicoService = {

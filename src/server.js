@@ -7,31 +7,16 @@ const { Router } = require("express");
 const router = Router();
 const app = express();
 
-// Rotas principais
 const routes = require("./router/router");
-const notificationRoutes = require("./router/notificationRoutes");
-const chatbotRoutes = require("./router/chatbotRoutes"); // 🔹 Chatbot
 
-// Middlewares
 app.use(express.json());
-app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-    optionsSuccessStatus: 200
-}));
+app.use(cors());
 
 // Servir arquivos estáticos
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/pdfs', express.static(path.join(__dirname, 'pdfs')));
-app.use('/public', express.static(path.join(__dirname, 'public'))); // Caso use pasta public
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
-// 🔹 Rotas do chatbot
-app.use('/api/chatbot', chatbotRoutes);
-
-// 🔹 Suas rotas existentes
-app.use('/notificacoes', notificationRoutes);
 app.use('/', routes);
 
 app.get('/', (req, res) => {

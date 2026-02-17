@@ -3,10 +3,10 @@ const path = require('path');
 const sequelize = require('../config/database');
 const Usuarios = require("../models/Usuario.js");
 const Agendamento = require("../models/Agendamento.js");
-const AgendamentoDocente = require('./agendamentoDocente.js');
+const AgendamentoTitular = require('./AgendamentoTitular.js');
 const Prontuario = require('./Prontuario.js');
-const Medico = require('./medico.js');
-const ProntuarioDocente = require('./ProntuarioDocente.js');
+const Medico = require('./Medico.js');
+const ProntuarioTitular = require('./ProntuarioTitular.js');
 const Dependente = require('./DependenteAdicionado.js');
 const AgendamentoDependente = require('./AgendamentoDependente.js');
 const ProntuarioDependente = require('./ProntuarioDependente.js');
@@ -32,8 +32,8 @@ Object.keys(db).forEach(modelName => {
 Agendamento.belongsTo(Usuarios, { foreignKey: 'usuario_id' });
 Usuarios.hasMany(Agendamento, { foreignKey: 'usuario_id' });
 
-AgendamentoDocente.belongsTo(Usuarios, { foreignKey: 'usuario_id' });
-Usuarios.hasMany(AgendamentoDocente, { foreignKey: 'usuario_id' });
+AgendamentoTitular.belongsTo(Usuarios, { foreignKey: 'usuario_id' });
+Usuarios.hasMany(AgendamentoTitular, { foreignKey: 'usuario_id' });
 
 Prontuario.belongsTo(Usuarios, { foreignKey: 'usuario_id' });
 Usuarios.hasMany(Prontuario, { foreignKey: 'usuario_id' });
@@ -44,8 +44,8 @@ Medico.hasMany(Agendamento, { foreignKey: 'medico_id' });
 Prontuario.belongsTo(Agendamento, { foreignKey: 'agendamento_id' });
 Agendamento.hasOne(Prontuario, { foreignKey: 'agendamento_id' });
 
-ProntuarioDocente.belongsTo(AgendamentoDocente, { foreignKey: 'agendamento_id' });
-AgendamentoDocente.hasOne(ProntuarioDocente, { foreignKey: 'agendamento_id' });
+ProntuarioTitular.belongsTo(AgendamentoTitular, { foreignKey: 'agendamento_id' });
+AgendamentoTitular.hasOne(ProntuarioTitular, { foreignKey: 'agendamento_id' });
 
 Dependente.belongsTo(Usuarios, { foreignKey: 'usuario_id' });
 Usuarios.hasMany(Dependente, { foreignKey: 'usuario_id' });

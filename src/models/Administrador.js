@@ -7,10 +7,6 @@ const AdmModel = sequelize.define(
     nome: {
       type: DataTypes.STRING(120),
       allowNull: false,
-      validate: {
-        notEmpty: true,
-        len: [3, 120],
-      },
     },
 
     email: {

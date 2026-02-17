@@ -69,7 +69,11 @@ const Usuario = sequelize.define('usuarios', {
     imagemGenero: { // Definindo o campo para a imagem
         type: DataTypes.STRING, // Tipo STRING para armazenar o nome ou caminho da imagem
         allowNull: true, // Permite que seja nulo (caso o gênero não tenha uma imagem associada)
-    }
+    },
+    quebraCabeca: {
+        type: DataTypes.STRING,
+        allowNull: true, // Permite que seja nulo
+    },
 }, {
     timestamps: true, // Adiciona createdAt e updatedAt automaticamente
 });

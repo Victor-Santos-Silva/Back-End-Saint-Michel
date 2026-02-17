@@ -23,15 +23,7 @@ const admController = {
         data: novoCadastroAdm,
       });
     } catch (error) {
-      console.error("Erro no controller:", error.mensagem);
-
-      if (error.name === "SequelizeValidationError") {
-        return res.status(400).json({
-          error:
-            "Erro de validação: " +
-            error.errors.map((err) => err.message).join(", "),
-        });
-      }
+      console.error("Erro no controller:", error);
       res.status(500).json({ error: "Erro interno no servidor." });
     }
   },
@@ -66,11 +58,6 @@ const admController = {
   getOne: async (req, res) => {
     try {
       const admin = await admService.getById(req.params.id);
-      if (!admin) {
-        return res.status(400).json({
-          msg: "Admin nao encontrado!",
-        });
-      }
       return res.status(200).json({
         msg: "Admin encontrado",
         admin,
@@ -85,13 +72,9 @@ const admController = {
   delete: async (req, res) => {
     try {
       const admin = await admService.delete(req.params.id);
-      if (!admin) {
-        return res.status(400).json({
-          msg: "Admin nao encontrado",
-        });
-      }
       return res.status(200).json({
         msg: "Admin deletado com sucesso!",
+        admin,
       });
     } catch (error) {
       return res.status(500).json({

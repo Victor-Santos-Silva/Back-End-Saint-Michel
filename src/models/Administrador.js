@@ -5,29 +5,19 @@ const AdmModel = sequelize.define(
   "Adm",
   {
     nome: {
-      type: DataTypes.STRING(120),
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
 
     email: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(50),
       allowNull: false,
       unique: true,
-      set(value) {
-        this.setDataValue("email", value.toLowerCase().trim());
-      },
-      validate: {
-        isEmail: true,
-        notEmpty: true,
-      },
     },
 
     senha: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(20),
       allowNull: false,
-      validate: {
-        len: [60, 255],
-      },
     },
 
     ativo: {

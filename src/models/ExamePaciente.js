@@ -1,29 +1,32 @@
-const sequelize = require("../config/database");
-const { DataTypes } = require("sequelize");
-
-const ExamePaciente = sequelize.define("examePaciente", {
-    tipoDeExame: {
+module.exports = (sequelize, DataTypes) => {
+  const ExamePaciente = sequelize.define(
+    "examePaciente",
+    {
+      tipoDeExame: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    exameEspecifico: {
+      },
+      exameEspecifico: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    data: {
+      },
+      data: {
         type: DataTypes.DATEONLY,
         allowNull: false,
-    },
-    hora: {
+      },
+      hora: {
         type: DataTypes.TIME,
         allowNull: false,
-    },
-    pedidoMedico: {
+      },
+      pedidoMedico: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
     },
-}, {
-    timestamps: true,
-});
+    {
+      timestamps: true,
+    },
+  );
 
-module.exports = ExamePaciente;
+  return ExamePaciente;
+};

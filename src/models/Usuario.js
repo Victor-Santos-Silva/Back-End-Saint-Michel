@@ -1,83 +1,94 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-
-const Usuario = sequelize.define('usuarios', {
-    nomeCompleto: {
+module.exports = (sequelize, DataTypes) => {
+  const Usuario = sequelize.define(
+    "Usuario",
+    {
+      nomeCompleto: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    dataDeNascimento: {
+      },
+      dataDeNascimento: {
         type: DataTypes.DATEONLY,
         allowNull: false,
-    },
-    cpf: {
+      },
+      cpf: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
         validate: {
-            len: [11, 11], // Garante 11 caracteres
+          len: [11, 11], // Garante 11 caracteres
         },
-    },
-    rg: {
+      },
+      rg: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
         validate: {
-            len: [7, 10], // Garante 10 caracteres
+          len: [7, 10], // Garante 10 caracteres
         },
-    },
-    genero: {
-        type: DataTypes.ENUM('Masculino', 'Feminino', 'Outro'),
+      },
+      genero: {
+        type: DataTypes.ENUM("Masculino", "Feminino", "Outro"),
         allowNull: false,
-    },
-    endereco: {
+      },
+      endereco: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    telefone: {
+      },
+      telefone: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            len: [10, 11], // Valida telefone fixo (10) ou celular (11)
-            isNumeric: true, // Apenas números
+          len: [10, 11], // Valida telefone fixo (10) ou celular (11)
+          isNumeric: true, // Apenas números
         },
-    },
-    convenioMedico: {
+      },
+      convenioMedico: {
         type: DataTypes.STRING,
         allowNull: true, // Pode ser nulo
-    },
-    planoConvenio: {
+      },
+      planoConvenio: {
         type: DataTypes.STRING,
         allowNull: true, // Pode ser nulo
-    },
-    tipoSanguineo: {
-        type: DataTypes.ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'),
-        allowNull: true
-    },
-    email: {
+      },
+      tipoSanguineo: {
+        type: DataTypes.ENUM("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"),
+        allowNull: true,
+      },
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
         validate: {
-            isEmail: true,
+          isEmail: true,
         },
-    },
-    senha: {
+      },
+      senha: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    imagemGenero: { // Definindo o campo para a imagem
+      },
+      imagemGenero: {
+        // Definindo o campo para a imagem
         type: DataTypes.STRING, // Tipo STRING para armazenar o nome ou caminho da imagem
         allowNull: true, // Permite que seja nulo (caso o gênero não tenha uma imagem associada)
-    },
-    quebraCabeca: {
+      },
+      quebraCabeca: {
         type: DataTypes.STRING,
         allowNull: true, // Permite que seja nulo
+      },
     },
-}, {
-    timestamps: true, // Adiciona createdAt e updatedAt automaticamente
-});
+    {
+      timestamps: true, // Adiciona createdAt e updatedAt automaticamente
+    },
+  );
 
+  Usuario.associate = (models) => {
+    Usuario.hasMany(models.Agendamento, { foreignKey: "usuario_id" });
+    Usuario.hasMany(models.AgendamentoDependente, { foreignKey: "usuario_id" });
+    Usuario.hasMany(models.Dependente, { foreignKey: "usuario_id" });
+    Usuario.hasMany(models.AgendamentoTitular, { foreignKey: "usuario_id" });
+    Usuario.hasMany(models.Prontuario, { foreignKey: "usuario_id" });
+    Usuario.hasMany(models.ProntuarioDependente, { foreignKey: "usuario_id" });
+  };
 
-
-module.exports = Usuario;
+  return Usuario;
+};

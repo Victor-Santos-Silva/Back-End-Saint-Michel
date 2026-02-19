@@ -1,47 +1,61 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-
-const AgendamentoDependente = sequelize.define('AgendamentoDependente', {
-    usuario_id: {
+module.exports = (sequelize, DataTypes) => {
+  const AgendamentoDependente = sequelize.define(
+    "AgendamentoDependente",
+    {
+      usuario_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'usuarios',
-            key: 'id'
-        }
-    },
-    medico_id: {
+          model: "usuarios",
+          key: "id",
+        },
+      },
+      medico_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'medicos',
-            key: 'id'
-        }
-    },
-    dependente_id: {
+          model: "medicos",
+          key: "id",
+        },
+      },
+      dependente_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'dependentes',
-            key: 'id'
-        }
-    },
-    data: {
+          model: "dependentes",
+          key: "id",
+        },
+      },
+      data: {
         type: DataTypes.DATEONLY,
-        allowNull: false
-    },
-    hora: {
-        type: DataTypes.TIME,
-        allowNull: false
-    },
-    status: {
-        type: DataTypes.ENUM('pendente', 'finalizado', 'nao_compareceu'),
         allowNull: false,
-        defaultValue: 'pendente'
-    }
-}, {
-    tableName: 'AgendamentoDependente',
-    timestamps: false
-});
+      },
+      hora: {
+        type: DataTypes.TIME,
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.ENUM("pendente", "finalizado", "nao_compareceu"),
+        allowNull: false,
+        defaultValue: "pendente",
+      },
+    },
+    {
+      timestamps: false,
+    },
+  );
 
-module.exports = AgendamentoDependente;
+  AgendamentoDependente.associate = (models) => {
+    AgendamentoDependente.belongsTo(models.Dependente, {
+      foreignKey: "dependente_id",
+    });
+    AgendamentoDependente.belongsTo(models.Usuario, {
+      foreignKey: "usuario_id",
+    });
+    AgendamentoDependente.hasOne(models.ProntuarioDependente, {
+      foreignKey: "agendamento_id",
+    });
+  };
+
+  return AgendamentoDependente;
+};

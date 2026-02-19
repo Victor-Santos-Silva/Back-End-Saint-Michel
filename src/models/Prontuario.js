@@ -1,34 +1,42 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
-
-const Prontuario = sequelize.define("Prontuario", {
-    agendamento_id: {
+module.exports = (sequelize, DataTypes) => {
+  const Prontuario = sequelize.define(
+    "Prontuario",
+    {
+      agendamento_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'agendamentos',
-            key: 'id'
-        }
-    },
-    usuario_id: {
+          model: "agendamentos",
+          key: "id",
+        },
+      },
+      usuario_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'usuarios',
-            key: 'id'
-        }
-    },
-    problemaRelatado: {
+          model: "usuarios",
+          key: "id",
+        },
+      },
+      problemaRelatado: {
         type: DataTypes.TEXT,
         allowNull: false,
-    },
-    recomendacaoMedico: {
+      },
+      recomendacaoMedico: {
         type: DataTypes.TEXT,
         allowNull: false,
-    }
-}, {
-    timestamps: true,
-    tableName: "Prontuarios",
-});
+      },
+    },
+    {
+      timestamps: true,
+      tableName: "Prontuarios",
+    },
+  );
 
-module.exports = Prontuario;
+  Prontuario.associate = (models) => {
+    Prontuario.belongsTo(models.Usuario, { foreignKey: "usuario_id" });
+    Prontuario.belongsTo(models.Agendamento, { foreignKey: "agendamento_id" });
+  };
+
+  return Prontuario;
+};

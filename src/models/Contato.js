@@ -1,29 +1,32 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
-
-const Contato = sequelize.define("contatos", {
-    nome: {
+module.exports = (sequelize, DataTypes) => {
+  const Contato = sequelize.define(
+    "contatos",
+    {
+      nome: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    email: {
+      },
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            isEmail: true, // Valida formato de e-mail
+          isEmail: true, // Valida formato de e-mail
         },
-    },
-    assunto: {
+      },
+      assunto: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
+      },
 
-    mensagem: {
+      mensagem: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
     },
-}, {
-    timestamps: true, // Adiciona createdAt e updatedAt
-});
+    {
+      timestamps: true, // Adiciona createdAt e updatedAt
+    },
+  );
 
-module.exports = Contato;
+  return Contato;
+};

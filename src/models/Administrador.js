@@ -17,20 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(20),
         allowNull: false,
       },
-
-      ativo: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
-      },
-
-      ultimoLogin: {
-        type: DataTypes.DATE,
-        allowNull: true,
-      },
     },
     {
       timestamps: true,
-      indexes: [{ unique: true, fields: ["email"] }],
     },
   );
 

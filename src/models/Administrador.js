@@ -1,7 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
   const AdmModel = sequelize.define(
-    "Adm",
+    "Administrador",
     {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+      },
       nome: {
         type: DataTypes.STRING(50),
         allowNull: false,

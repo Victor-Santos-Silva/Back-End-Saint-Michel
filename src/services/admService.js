@@ -1,25 +1,25 @@
-const Adm = require("../models/Administrador");
+const { Administrador } = require("../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const admService = {
+  // login e esqueci senha
   login: async (login) => {
     const { email, senha } = login;
 
-
     if (!email || !senha) {
-      throw new Error("Email ou senha incorretos");
+      throw new Error("Email e senha são obrigatórios.");
     }
 
-    const admin = await Adm.findOne({ where: { email } });
+    const admin = await Administrador.findOne({ where: { email } });
 
     if (!admin) {
-      throw new Error("Email ou senha incorretos");
+      throw new Error("Email ou senha incorretos.");
     }
 
     const senhaIsValid = await bcrypt.compare(senha, admin.senha);
     if (!senhaIsValid) {
-      throw new Error("Email ou senha incorretos");
+      throw new Error("Email ou senha incorretos.");
     }
 
     const token = jwt.sign(
@@ -35,26 +35,10 @@ const admService = {
     };
   },
 
-  create: async (cadastro) => {
-    try {
-      const { nome, email, senha } = cadastro;
-
-      const hashSenha = await bcrypt.hash(senha, 10);
-
-      return await Adm.create({
-        nome,
-        email,
-        senha: hashSenha,
-      });
-    } catch (error) {
-      console.error("Erro ao criar Adm:", error);
-      throw error;
-    }
-  },
   esqueciSenha: async (email, novaSenha) => {
     try {
       // Primeiro busca o admin pelo email
-      const admin = await Adm.findOne({ where: { email } });
+      const admin = await Administrador.findOne({ where: { email } });
 
       if (!admin) {
         throw new Error("Adm não encontrado");
@@ -69,14 +53,39 @@ const admService = {
       await admin.update({ senha: hashSenha });
       return admin;
     } catch (error) {
-      throw new Error(
-        error.message || "Ocorreu um erro ao trocar a senha do Admin",
-      );
+      throw error;
     }
   },
+
+  // CRUD
+  create: async (cadastro) => {
+    try {
+      const { nome, email, senha } = cadastro;
+
+      const hashSenha = await bcrypt.hash(senha, 10);
+
+      const adminExistente = await Administrador.findOne({ where: { email } });
+      if (adminExistente) {
+        throw new Error("Email já cadastrado.");
+      }
+
+      if (!nome || !email || !senha) {
+        throw new Error("Todos os campos são obrigatórios.");
+      }
+
+      return await Administrador.create({
+        nome,
+        email,
+        senha: hashSenha,
+      });
+    } catch (error) {
+      throw error;
+    }
+  },
+
   update: async (id, adminToUpdate) => {
     try {
-      const admin = await Adm.findByPk(id);
+      const admin = await Administrador.findByPk(id);
       if (!admin) {
         throw new Error("Adm não encontrado.");
       }
@@ -89,23 +98,26 @@ const admService = {
       await admin.update(adminToUpdate);
       return admin;
     } catch (error) {
-      throw new Error("Ocorreu um erro ao atualizar admin");
+      throw error;
     }
   },
   getById: async (id) => {
     try {
-      const admin = await Adm.findByPk(id);
+      const admin = await Administrador.findByPk(id, {
+        attributes: { exclude: ["senha"] },
+      });
       if (!admin) {
-        return null;
+        throw new Error("Administrador não encontrado.");
       }
+
       return admin;
     } catch (error) {
-      throw new Error("Ocorreu um erro ao buscar um unico admin");
+      throw error;
     }
   },
   getAll: async () => {
     try {
-      return await Adm.findAll({
+      return await Administrador.findAll({
         attributes: { exclude: ["senha"] },
       });
     } catch (error) {
@@ -114,14 +126,14 @@ const admService = {
   },
   delete: async (id) => {
     try {
-      const user = await Adm.findByPk(id);
+      const user = await Administrador.findByPk(id);
       if (!user) {
-        return null;
+        throw new Error("Administrador não encontrado.");
       }
       await user.destroy();
       return user;
     } catch (error) {
-      throw new Error("Ocorreu um erro ao deletar o admin");
+      throw error;
     }
   },
 };

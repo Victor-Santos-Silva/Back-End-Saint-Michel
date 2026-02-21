@@ -17,14 +17,13 @@ const admController = {
 
   create: async (req, res) => {
     try {
-      const novoCadastroAdm = await admService.create(req.body);
+      const novoAdm = await admService.create(req.body);
       res.status(201).json({
         mensagem: "Admin criado com sucesso.",
-        data: novoCadastroAdm,
+        data: novoAdm,
       });
     } catch (error) {
-      console.error("Erro no controller:", error);
-      res.status(500).json({ error: "Erro interno no servidor." });
+      return res.status(400).json({ error: error.message });
     }
   },
 
@@ -36,7 +35,7 @@ const admController = {
       res.status(200).json(admAtualizado);
     } catch (error) {
       return res.status(500).json({
-        msg: "Erro ao atualizar o admin",
+        msg: error.message,
       });
     }
   },
@@ -50,7 +49,7 @@ const admController = {
       });
     } catch (error) {
       return res.status(200).json({
-        msg: "Ocorreu um erro no servidor",
+        msg: error.message,
       });
     }
   },
@@ -63,8 +62,8 @@ const admController = {
         admin,
       });
     } catch (error) {
-      return res.status(500).json({
-        msg: "Ocorreu um erro no servidor",
+      return res.status(404).json({
+        msg: error.message,
       });
     }
   },
@@ -78,7 +77,7 @@ const admController = {
       });
     } catch (error) {
       return res.status(500).json({
-        msg: "Ocorreu um erro no servidor",
+        msg: error.message,
       });
     }
   },

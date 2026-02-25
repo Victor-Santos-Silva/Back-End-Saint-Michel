@@ -1,19 +1,24 @@
 const { Router } = require("express");
 const router = Router();
 const pacienteController = require("../controller/pacienteController.js");
+const authenticateToken = require("../middlewares/authenticateToken.js");
 
-router.post("/cadastro", pacienteController.create);
+router.post("/cadastro", authenticateToken, pacienteController.create);
 
-router.post("/login", pacienteController.login);
+router.post("/login", authenticateToken, pacienteController.login);
 
-router.get("/", pacienteController.getAll);
+router.get("/", authenticateToken, pacienteController.getAll);
 
-router.get("/:id", pacienteController.getOne);
+router.get("/:id", authenticateToken, pacienteController.getOne);
 
-//router.put('/:id', pacienteController.update);
+router.put("/:id", authenticateToken, pacienteController.update);
 
-//router.patch('/esqueci-senha', pacienteController.esqueciSenha);
+router.patch(
+  "/esqueci-senha",
+  authenticateToken,
+  pacienteController.esqueciSenha,
+);
 
-router.delete("/:id", pacienteController.delete);
+router.delete("/:id", authenticateToken, pacienteController.delete);
 
 module.exports = router;

@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      dataDeNascimento: {
+      data_nascimento: {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
@@ -14,17 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-        validate: {
-          len: [11, 11], // Garante 11 caracteres
-        },
       },
       rg: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-        validate: {
-          len: [7, 10], // Garante 10 caracteres
-        },
       },
       genero: {
         type: DataTypes.ENUM("Masculino", "Feminino", "Outro"),
@@ -37,20 +31,16 @@ module.exports = (sequelize, DataTypes) => {
       telefone: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          len: [10, 11], // Valida telefone fixo (10) ou celular (11)
-          isNumeric: true, // Apenas números
-        },
       },
-      convenioMedico: {
+      convenio_medico: {
         type: DataTypes.STRING,
         allowNull: true, // Pode ser nulo
       },
-      planoConvenio: {
+      plano_convenio: {
         type: DataTypes.STRING,
         allowNull: true, // Pode ser nulo
       },
-      tipoSanguineo: {
+      tipo_sanguineo: {
         type: DataTypes.ENUM("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"),
         allowNull: true,
       },
@@ -58,36 +48,29 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-        validate: {
-          isEmail: true,
-        },
       },
       senha: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      imagemGenero: {
-        // Definindo o campo para a imagem
-        type: DataTypes.STRING, // Tipo STRING para armazenar o nome ou caminho da imagem
-        allowNull: true, // Permite que seja nulo (caso o gênero não tenha uma imagem associada)
-      },
-      quebraCabeca: {
-        type: DataTypes.STRING,
-        allowNull: true, // Permite que seja nulo
-      },
     },
     {
+      tableName: "pacientes",
       timestamps: true, // Adiciona createdAt e updatedAt automaticamente
     },
   );
 
   Paciente.associate = (models) => {
     Paciente.hasMany(models.Agendamento, { foreignKey: "paciente_id" });
-    Paciente.hasMany(models.AgendamentoDependente, { foreignKey: "paciente_id" });
+    Paciente.hasMany(models.AgendamentoDependente, {
+      foreignKey: "paciente_id",
+    });
     Paciente.hasMany(models.Dependente, { foreignKey: "paciente_id" });
     Paciente.hasMany(models.AgendamentoTitular, { foreignKey: "paciente_id" });
     Paciente.hasMany(models.Prontuario, { foreignKey: "paciente_id" });
-    Paciente.hasMany(models.ProntuarioDependente, { foreignKey: "paciente_id" });
+    Paciente.hasMany(models.ProntuarioDependente, {
+      foreignKey: "paciente_id",
+    });
   };
 
   return Paciente;

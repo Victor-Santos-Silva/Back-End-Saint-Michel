@@ -3,13 +3,11 @@ const PacientesService = require("../services/pacienteService.js");
 const pacientesController = {
   login: async (req, res) => {
     try {
-      const { date } = req.body;
-
-      const pacientes = await PacientesService.login(date);
+      const paciente = await PacientesService.login(req.body);
 
       return res.status(200).json({
         msg: "Login realizado",
-        pacientes,
+        paciente,
       });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
@@ -20,7 +18,7 @@ const pacientesController = {
     try {
       const cadastroPaciente = await PacientesService.create(req.body);
       res.status(201).json({
-        message: "Usuário cadastrado com sucesso!",
+        message: "Paciente cadastrado com sucesso!",
         paciente: cadastroPaciente,
       });
     } catch (error) {
@@ -29,14 +27,11 @@ const pacientesController = {
   },
 
   esqueciSenha: async (req, res) => {
-    const { date } = req.body;
-
     try {
-      const pacientes = await PacientesService.esqueciSenha(date);
+      await PacientesService.esqueciSenha(req.body);
 
       return res.status(200).json({
         msg: "Senha atualizada com sucesso",
-        pacientes,
       });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
@@ -46,7 +41,7 @@ const pacientesController = {
     try {
       const pacientes = await PacientesService.getById(req.params.id);
 
-      return res.status(200).json({ msg: "Usuário encontrado", pacientes });
+      return res.status(200).json({ msg: "Paciente encontrado", pacientes });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
     }
@@ -55,7 +50,7 @@ const pacientesController = {
   getAll: async (req, res) => {
     try {
       const Pacientes = await PacientesService.getAll();
-      return res.status(200).json({ msg: "Todos os Usuários!", Pacientes });
+      return res.status(200).json({ msg: "Todos os Pacientes!", Pacientes });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
     }

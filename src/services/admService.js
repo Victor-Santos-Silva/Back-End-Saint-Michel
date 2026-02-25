@@ -90,6 +90,15 @@ const admService = {
         throw new Error("Adm não encontrado.");
       }
 
+      if (adminToUpdate.email) {
+        const emailExistente = await Administrador.findOne({
+          where: { email: adminToUpdate.email },
+        });
+        if (emailExistente && emailExistente.id !== id) {
+          throw new Error("Email já cadastrado por outro admin.");
+        }
+      }
+
       if (adminToUpdate.senha) {
         const hashSenha = await bcrypt.hash(adminToUpdate.senha, 10);
         adminToUpdate.senha = hashSenha;

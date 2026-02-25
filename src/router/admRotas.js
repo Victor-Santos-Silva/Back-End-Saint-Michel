@@ -2,9 +2,9 @@ const { Router } = require("express");
 const admController = require("../controller/admController");
 const authenticateToken = require("../middlewares/authenticateToken");
 const {
-  validateUsuario,
-  validadeUsuarioId,
-} = require("../middlewares/validadeUsuario");
+  validateAdmin,
+  validateAdminId,
+} = require("../middlewares/validateAdmin");
 const router = Router();
 
 //Login ADM;
@@ -12,7 +12,7 @@ const router = Router();
 router.post(
   "/cadastro",
   authenticateToken,
-  validateUsuario,
+  validateAdmin,
   admController.create,
 );
 
@@ -20,18 +20,13 @@ router.get("/", authenticateToken, admController.getAll);
 
 router.get("/:id", authenticateToken, admController.getOne);
 
-router.delete(
-  "/:id",
-  authenticateToken,
-  validadeUsuarioId,
-  admController.delete,
-);
+router.delete("/:id", authenticateToken, validateAdminId, admController.delete);
 
 router.put(
   "/:id",
   authenticateToken,
-  validadeUsuarioId,
-  validateUsuario,
+  validateAdminId,
+  validateAdmin,
   admController.update,
 );
 

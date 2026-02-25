@@ -1,25 +1,40 @@
 const { Router } = require("express");
 const admController = require("../controller/admController");
+const authenticateToken = require("../middlewares/authenticateToken");
 const {
-  validateAdmin,
-  validateAdminId,
-} = require("../middlewares/validateAdmin");
+  validateUsuario,
+  validadeUsuarioId,
+} = require("../middlewares/validadeUsuario");
 const router = Router();
 
 //Login ADM;
 
-router.post("/cadastro", validateAdmin, admController.create);
+router.post(
+  "/cadastro",
+  authenticateToken,
+  validateUsuario,
+  admController.create,
+);
 
-router.get("/",validateAdmin, admController.getAll);
+router.get("/", authenticateToken, admController.getAll);
 
-router.get("/:id", validateAdminId, admController.getOne);
+router.get("/:id", authenticateToken, admController.getOne);
 
-router.delete("/:id", validateAdminId, admController.delete);
+router.delete(
+  "/:id",
+  authenticateToken,
+  validadeUsuarioId,
+  admController.delete,
+);
 
-router.put("/:id", validateAdminId, admController.update);
+router.put(
+  "/:id",
+  authenticateToken,
+  validadeUsuarioId,
+  validateUsuario,
+  admController.update,
+);
 
 router.post("/login", admController.login);
-
-//router.patch('/esqueciSenha/:id', admController.esqueciSenha)
 
 module.exports = router;

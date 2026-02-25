@@ -1,5 +1,5 @@
 const Prontuario = require("../models/Prontuario");
-const Usuario = require("../models/Usuario");
+const Usuario = require("../models/Pacientes");
 const prontuarioService = {
     create: async ({ usuario_id, problemaRelatado, recomendacaoMedico }) => {
         try {

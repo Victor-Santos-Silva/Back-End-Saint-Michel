@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Agendamento.associate = (models) => {
-    Agendamento.belongsTo(models.Usuario, { foreignKey: "usuario_id" });
+    Agendamento.belongsTo(models.Paciente, { foreignKey: "paciente_id" });
     Agendamento.belongsTo(models.Medico, { foreignKey: "medico_id" });
     Agendamento.hasOne(models.Prontuario, { foreignKey: "agendamento_id" });
   };

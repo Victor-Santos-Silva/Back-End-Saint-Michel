@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      usuario_id: {
+      paciente_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-          model: "usuarios",
+          model: "pacientes",
           key: "id",
         },
       },

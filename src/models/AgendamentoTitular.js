@@ -2,11 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const AgendamentoTitular = sequelize.define(
     "AgendamentoTitular",
     {
-      usuario_id: {
+      paciente_id: {
         // Quem fez o AgendamentoTitular
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: { model: "usuarios", key: "id" },
+        references: { model: "pacientes", key: "id" },
       },
       medico_id: {
         // Médico que atenderá
@@ -96,7 +96,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   AgendamentoTitular.associate = (models) => {
-    AgendamentoTitular.belongsTo(models.Usuario, { foreignKey: "usuario_id" });
+    AgendamentoTitular.belongsTo(models.Paciente, { foreignKey: "paciente_id" });
     AgendamentoTitular.hasOne(models.ProntuarioTitular, {
       foreignKey: "agendamento_id",
     });

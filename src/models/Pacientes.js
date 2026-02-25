@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const Usuario = sequelize.define(
-    "Usuario",
+  const Paciente = sequelize.define(
+    "Paciente",
     {
       nomeCompleto: {
         type: DataTypes.STRING,
@@ -81,14 +81,14 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  Usuario.associate = (models) => {
-    Usuario.hasMany(models.Agendamento, { foreignKey: "usuario_id" });
-    Usuario.hasMany(models.AgendamentoDependente, { foreignKey: "usuario_id" });
-    Usuario.hasMany(models.Dependente, { foreignKey: "usuario_id" });
-    Usuario.hasMany(models.AgendamentoTitular, { foreignKey: "usuario_id" });
-    Usuario.hasMany(models.Prontuario, { foreignKey: "usuario_id" });
-    Usuario.hasMany(models.ProntuarioDependente, { foreignKey: "usuario_id" });
+  Paciente.associate = (models) => {
+    Paciente.hasMany(models.Agendamento, { foreignKey: "paciente_id" });
+    Paciente.hasMany(models.AgendamentoDependente, { foreignKey: "paciente_id" });
+    Paciente.hasMany(models.Dependente, { foreignKey: "paciente_id" });
+    Paciente.hasMany(models.AgendamentoTitular, { foreignKey: "paciente_id" });
+    Paciente.hasMany(models.Prontuario, { foreignKey: "paciente_id" });
+    Paciente.hasMany(models.ProntuarioDependente, { foreignKey: "paciente_id" });
   };
 
-  return Usuario;
+  return Paciente;
 };

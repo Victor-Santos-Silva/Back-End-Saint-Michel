@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const usuarios = require("./usuarioRotas");
+const paciente = require("./pacienteRotas.js");
 const admRoutes = require("./admRotas");
 const medicoRoutes = require("./medicoRotas");
 const agendamento = require("./agendamentoRoutes");
@@ -25,7 +25,7 @@ const router = Router();
 
 router.use("/administrador", admRoutes);
 router.use("/duvidas", duvidas);
-router.use("/paciente", usuarios);
+router.use("/paciente", paciente);
 router.use("/medico", medicoRoutes);
 router.use("/notificacoes", notificacaoRoutes);
 

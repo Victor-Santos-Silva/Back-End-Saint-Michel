@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      usuario_id: {
+      paciente_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-          model: "Usuario",
+          model: "Paciente",
           key: "id",
         },
       },
@@ -36,8 +36,8 @@ module.exports = (sequelize, DataTypes) => {
     ProntuarioDependente.belongsTo(models.AgendamentoDependente, {
       foreignKey: "agendamento_id",
     });
-    ProntuarioDependente.belongsTo(models.Usuario, {
-      foreignKey: "usuario_id",
+    ProntuarioDependente.belongsTo(models.Paciente, {
+      foreignKey: "paciente_id",
     });
   };
 

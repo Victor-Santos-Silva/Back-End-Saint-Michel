@@ -1,5 +1,5 @@
 const AgendamentoTitular = require("../models/agendamentoTitular.js");
-const Usuario = require("../models/Usuario.js");
+const Usuario = require("../models/Pacientes.js");
 
 const AgendamentoTitularController = {
   async criarAgendamentoTitular(req, res) {

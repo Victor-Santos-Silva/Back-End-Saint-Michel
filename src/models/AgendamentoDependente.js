@@ -49,8 +49,8 @@ module.exports = (sequelize, DataTypes) => {
     AgendamentoDependente.belongsTo(models.Dependente, {
       foreignKey: "dependente_id",
     });
-    AgendamentoDependente.belongsTo(models.Usuario, {
-      foreignKey: "usuario_id",
+    AgendamentoDependente.belongsTo(models.Paciente, {
+      foreignKey: "paciente_id",
     });
     AgendamentoDependente.hasOne(models.ProntuarioDependente, {
       foreignKey: "agendamento_id",

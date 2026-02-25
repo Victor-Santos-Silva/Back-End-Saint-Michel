@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      usuario_id: {
+      paciente_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "usuarios",
+          model: "pacientes",
           key: "id",
         },
       },
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Prontuario.associate = (models) => {
-    Prontuario.belongsTo(models.Usuario, { foreignKey: "usuario_id" });
+    Prontuario.belongsTo(models.Paciente, { foreignKey: "paciente_id" });
     Prontuario.belongsTo(models.Agendamento, { foreignKey: "agendamento_id" });
   };
 

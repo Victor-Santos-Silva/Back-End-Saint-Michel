@@ -1,5 +1,5 @@
 const Agendamento = require("../models/Agendamento.js");
-const Usuarios = require("../models/Usuario.js");
+const Paciente = require("../models/Pacientes.js");
 
 const agendamentoController = {
   async criarAgendamento(req, res) {
@@ -8,7 +8,7 @@ const agendamentoController = {
 
       // Cria o agendamento no banco de dados
       const agendamento = await Agendamento.create({
-        usuario_id: req.usuarioId,
+        paciente_id: req.pacienteId,
         especialidade,
         medico_id,
         data,
@@ -25,7 +25,7 @@ const agendamentoController = {
     try {
       const agendamentos = await Agendamento.findAll({
         include: [
-          { model: Usuarios, },
+          { model: Paciente, },
         ],
       });
       res.status(200).json(agendamentos);
@@ -45,7 +45,7 @@ const agendamentoController = {
         agendamentos = await Agendamento.findAll({
           where: { medico_id: medico_id },
           include: [
-            { model: Usuarios},
+            { model: Paciente},
           ],
         });
       } else {
@@ -67,7 +67,7 @@ const agendamentoController = {
       const { id } = req.params;
       const agendamento = await Agendamento.findByPk(id, {
         include: [
-          { model: Usuarios},
+          { model: Paciente},
         ],
       });
 
@@ -76,7 +76,7 @@ const agendamentoController = {
       }
 
       res.status(200).json({
-        AgendamentosUsuarios: agendamento
+        AgendamentosPaciente: agendamento
       });
     } catch (error) {
       console.error("Erro ao obter agendamento:", error);

@@ -1,6 +1,6 @@
 const Agendamento = require('../models/Agendamento');
 const Prontuario = require('../models/Prontuario');
-const Usuario = require('../models/Usuario'); // Se necessário para histórico
+const Usuario = require('../models/Pacientes'); // Se necessário para histórico
 const { Op } = require('sequelize');
 
 const consultaService = {

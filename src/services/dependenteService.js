@@ -1,7 +1,7 @@
-const Dependente = require("../models/DependenteAdicionado");
-const Usuario = require("../models/Usuario");
+const Dependente = require("../models/Dependente");
+const Usuario = require("../models/Pacientes");
 
-const usuarioService = {
+const dependenteService = {
     create: async (cadastro) => {
         try {
             const { usuario_id, nomeCompleto, parentesco, dataNascimento, cpf, genero, tipoSanguineo, imagemGenero } = cadastro;
@@ -68,4 +68,4 @@ const usuarioService = {
     }
 };
 
-module.exports = usuarioService;
+module.exports = dependenteService;

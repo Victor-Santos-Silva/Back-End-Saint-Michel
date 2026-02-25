@@ -2,11 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const Dependente = sequelize.define(
     "Dependente",
     {
-      usuario_id: {
+      paciente_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "Usuario",
+          model: "Pacientes",
           key: "id",
         },
       },
@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Dependente.associate = (models) => {
-    Dependente.belongsTo(models.Usuario, { foreignKey: "usuario_id" });
+    Dependente.belongsTo(models.Paciente, { foreignKey: "paciente_id" });
   };
   return Dependente;
 };

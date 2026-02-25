@@ -5,6 +5,8 @@ const path = require("path");
 const { sequelize } = require("./models");
 const { Router } = require("express");
 const router = Router();
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("../src/docs/swagger");
 const app = express();
 
 const routes = require("./router/router");
@@ -16,6 +18,7 @@ app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/pdfs", express.static(path.join(__dirname, "pdfs")));
 app.use("/public", express.static(path.join(__dirname, "public")));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/", routes);
 

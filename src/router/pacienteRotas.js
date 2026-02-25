@@ -23,16 +23,48 @@ const authenticateToken = require("../middlewares/authenticateToken.js");
  *           schema:
  *             type: object
  *             required:
- *               - nome
+ *               - nomeCompleto
+ *               - data_nascimento
+ *               - cpf
+ *               - rg
+ *               - genero
+ *               - endereco
+ *               - telefone
+ *               - convenio_medico
+ *               - plano_convenio
+ *               - tipo_sanguineo
  *               - email
  *               - senha
  *             properties:
- *               nome:
- *                 type: string
+ *               nomeCompleto:
+ *                type: string
+ *               data_nascimento:
+ *                type: string
+ *                format: date
+ *               cpf:
+ *                type: string
+ *                description: "CPF do paciente (formato: 000.000.000-00)"
+ *               rg:
+ *                type: string
+ *               genero:
+ *                type: string
+ *                enum: [Masculino, Feminino, Outro]
+ *               endereco:
+ *                type: string
+ *               telefone:
+ *                type: string
+ *               convenio_medico:
+ *                type: string
+ *               plano_convenio:
+ *                type: string
+ *               tipo_sanguineo:
+ *                type: string
+ *                enum: [A+, A-, B+, B-, AB+, AB-, O+, O-]
  *               email:
- *                 type: string
+ *                type: string
  *               senha:
- *                 type: string
+ *                type: string
+ *
  *     responses:
  *       201:
  *         description: Paciente criado com sucesso
@@ -87,7 +119,7 @@ router.get("/", authenticateToken, pacienteController.getAll);
 
 /**
  * @swagger
- * /pacientes/{id}:
+ * /paciente/{id}:
  *   get:
  *     summary: Busca paciente por ID
  *     tags: [Pacientes]
@@ -110,7 +142,7 @@ router.get("/:id", authenticateToken, pacienteController.getOne);
 
 /**
  * @swagger
- * /pacientes/{id}:
+ * /paciente/{id}:
  *   put:
  *     summary: Atualiza paciente por ID
  *     tags: [Pacientes]
@@ -143,7 +175,7 @@ router.put("/:id", authenticateToken, pacienteController.update);
 
 /**
  * @swagger
- * /pacientes/esqueci-senha:
+ * /paciente/esqueci-senha:
  *   patch:
  *     summary: Atualiza senha do paciente
  *     tags: [Pacientes]
@@ -174,7 +206,7 @@ router.patch(
 
 /**
  * @swagger
- * /pacientes/{id}:
+ * /paciente/{id}:
  *   delete:
  *     summary: Remove paciente por ID
  *     tags: [Pacientes]

@@ -5,7 +5,7 @@ const authenticateToken = require("../middlewares/authenticateToken.js");
 
 router.post("/cadastro", authenticateToken, pacienteController.create);
 
-router.post("/login", authenticateToken, pacienteController.login);
+router.post("/login", pacienteController.login);
 
 router.get("/", authenticateToken, pacienteController.getAll);
 

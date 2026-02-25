@@ -302,194 +302,201 @@ const PacientesService = {
       }
 
       //Validação do nome completo
-      if (atualizacao.nomeCompleto && atualizacao.nomeCompleto.length < 3) {
-        throw new Error("O nome completo deve conter pelo menos 3 caracteres.");
-      } else if (atualizacao.nomeCompleto.length > 255) {
-        throw new Error(
-          "O nome completo deve conter no máximo 255 caracteres.",
-        );
-      } else if (!/^[a-zA-Z\s]+$/.test(atualizacao.nomeCompleto)) {
-        throw new Error("O nome completo deve conter apenas letras e espaços.");
-      } else if (/\d/.test(atualizacao.nomeCompleto)) {
-        throw new Error("O nome completo não deve conter números.");
-      } else if (/[!@#$%^&*(),.?":{}|<>]/.test(atualizacao.nomeCompleto)) {
-        throw new Error(
-          "O nome completo não deve conter caracteres especiais.",
-        );
-      } else if (/\s{2,}/.test(atualizacao.nomeCompleto)) {
-        throw new Error(
-          "O nome completo não deve conter múltiplos espaços consecutivos.",
-        );
-      } else if (atualizacao.nomeCompleto.trim().length === 0) {
-        throw new Error(
-          "O nome completo não deve ser vazio ou conter apenas espaços.",
-        );
-      } else if (!atualizacao.nomeCompleto) {
-        throw new Error("O nome completo é obrigatório.");
+      if (atualizacao.nomeCompleto) {
+        if (atualizacao.nomeCompleto.length < 3) {
+          throw new Error(
+            "O nome completo deve conter pelo menos 3 caracteres.",
+          );
+        } else if (atualizacao.nomeCompleto.length > 255) {
+          throw new Error(
+            "O nome completo deve conter no máximo 255 caracteres.",
+          );
+        } else if (!/^[a-zA-Z\s]+$/.test(atualizacao.nomeCompleto)) {
+          throw new Error(
+            "O nome completo deve conter apenas letras e espaços.",
+          );
+        } else if (/\d/.test(atualizacao.nomeCompleto)) {
+          throw new Error("O nome completo não deve conter números.");
+        } else if (/[!@#$%^&*(),.?":{}|<>]/.test(atualizacao.nomeCompleto)) {
+          throw new Error(
+            "O nome completo não deve conter caracteres especiais.",
+          );
+        } else if (/\s{2,}/.test(atualizacao.nomeCompleto)) {
+          throw new Error(
+            "O nome completo não deve conter múltiplos espaços consecutivos.",
+          );
+        } else if (atualizacao.nomeCompleto.trim().length === 0) {
+          throw new Error(
+            "O nome completo não deve ser vazio ou conter apenas espaços.",
+          );
+        }
       }
 
       //Validação da data de nascimento
-      if (atualizacao.data_nascimento.toString().length < 10) {
-        throw new Error(
-          "A data de nascimento deve ter no mínimo 10 caracteres (formato: YYYY-MM-DD).",
-        );
+      if (atualizacao.data_nascimento) {
+        if (atualizacao.data_nascimento.toString().length < 10) {
+          throw new Error("Data inválida");
+        }
       } else if (atualizacao.data_nascimento > new Date()) {
         throw new Error("A data de nascimento deve ser no passado.");
-      } else if (!atualizacao.data_nascimento) {
-        throw new Error("A data de nascimento é obrigatória.");
       }
 
       //Validação do CPF
-      if (!atualizacao.cpf) {
-        throw new Error("CPF é obrigatório.");
-      } else if (!/^\d{11}$/.test(atualizacao.cpf)) {
-        throw new Error("CPF deve conter exatamente 11 dígitos numéricos.");
-      } else if (/\D/.test(atualizacao.cpf)) {
-        throw new Error("CPF deve conter apenas dígitos numéricos.");
-      } else if (atualizacao.cpf.length !== 11) {
-        throw new Error("CPF deve conter exatamente 11 dígitos.");
-      } else if (
-        atualizacao.cpf.split("").every((char) => char === atualizacao.cpf[0])
-      ) {
-        throw new Error("CPF não pode conter todos os dígitos iguais.");
-      }
-      const cpfExistente = await Paciente.findOne({
-        where: { cpf: atualizacao.cpf },
-      });
-      if (cpfExistente && cpfExistente.id !== id) {
-        throw new Error("CPF já está em uso por outro paciente.");
+      if (atualizacao.cpf) {
+        if (/^\d{11}$/.test(atualizacao.cpf)) {
+          throw new Error("CPF deve conter exatamente 11 dígitos numéricos.");
+        } else if (/\D/.test(atualizacao.cpf)) {
+          throw new Error("CPF deve conter apenas dígitos numéricos.");
+        } else if (atualizacao.cpf.length !== 11) {
+          throw new Error("CPF deve conter exatamente 11 dígitos.");
+        } else if (
+          atualizacao.cpf.split("").every((char) => char === atualizacao.cpf[0])
+        ) {
+          throw new Error("CPF não pode conter todos os dígitos iguais.");
+        }
+        const cpfExistente = await Paciente.findOne({
+          where: { cpf: atualizacao.cpf },
+        });
+        if (cpfExistente && cpfExistente.id !== id) {
+          throw new Error("CPF já está em uso por outro paciente.");
+        }
       }
 
       //validação do RG
-      if (!atualizacao.rg) {
-        throw new Error("RG é obrigatório.");
-      } else if (!/^\d{9}$/.test(atualizacao.rg)) {
-        throw new Error("RG deve conter exatamente 9 dígitos numéricos.");
-      } else if (/\D/.test(atualizacao.rg)) {
-        throw new Error("RG deve conter apenas dígitos numéricos.");
-      } else if (atualizacao.rg.length !== 9) {
-        throw new Error("RG deve conter exatamente 9 dígitos.");
-      } else if (
-        atualizacao.rg.split("").every((char) => char === atualizacao.rg[0])
-      ) {
-        throw new Error("RG não pode conter todos os dígitos iguais.");
-      }
-      const rgExistente = await Paciente.findOne({
-        where: { rg: atualizacao.rg },
-      });
-      if (rgExistente && rgExistente.id !== id) {
-        throw new Error("RG já está em uso por outro paciente.");
+      if (atualizacao.rg) {
+        if (!/^\d{9}$/.test(atualizacao.rg)) {
+          throw new Error("RG deve conter exatamente 9 dígitos numéricos.");
+        } else if (/\D/.test(atualizacao.rg)) {
+          throw new Error("RG deve conter apenas dígitos numéricos.");
+        } else if (atualizacao.rg.length !== 9) {
+          throw new Error("RG deve conter exatamente 9 dígitos.");
+        } else if (
+          atualizacao.rg.split("").every((char) => char === atualizacao.rg[0])
+        ) {
+          throw new Error("RG não pode conter todos os dígitos iguais.");
+        }
+        const rgExistente = await Paciente.findOne({
+          where: { rg: atualizacao.rg },
+        });
+        if (rgExistente && rgExistente.id !== id) {
+          throw new Error("RG já está em uso por outro paciente.");
+        }
       }
 
       //validação do gênero
-      if (!atualizacao.genero) {
-        throw new Error("Gênero é obrigatório.");
-      } else if (
-        !["Masculino", "Feminino", "Outro"].includes(atualizacao.genero)
-      ) {
-        throw new Error("Gênero deve ser 'Masculino', 'Feminino' ou 'Outro'.");
+      if (atualizacao.genero) {
+        if (!["Masculino", "Feminino", "Outro"].includes(atualizacao.genero)) {
+          throw new Error(
+            "Gênero deve ser 'Masculino', 'Feminino' ou 'Outro'.",
+          );
+        }
       }
 
       //Validação do endereço
-      if (!atualizacao.endereco) {
-        throw new Error("Endereço é obrigatório.");
-      } else if (atualizacao.endereco.length < 5) {
-        throw new Error("O endereço deve conter pelo menos 5 caracteres.");
-      } else if (atualizacao.endereco.length > 255) {
-        throw new Error("O endereço deve conter no máximo 255 caracteres.");
+      if (atualizacao.endereco) {
+        if (atualizacao.endereco.length < 5) {
+          throw new Error("O endereço deve conter pelo menos 5 caracteres.");
+        } else if (atualizacao.endereco.length > 255) {
+          throw new Error("O endereço deve conter no máximo 255 caracteres.");
+        }
       }
 
       //Validação do telefone
-      if (!atualizacao.telefone) {
-        throw new Error("Telefone é obrigatório.");
-      } else if (!/^\d{10,11}$/.test(atualizacao.telefone)) {
-        throw new Error(
-          "Telefone deve conter 10 ou 11 dígitos numéricos (com DDD).",
-        );
-      } else if (/\D/.test(atualizacao.telefone)) {
-        throw new Error("Telefone deve conter apenas dígitos numéricos.");
-      } else if (
-        atualizacao.telefone.length < 10 ||
-        atualizacao.telefone.length > 11
-      ) {
-        throw new Error("Telefone deve conter 10 ou 11 dígitos.");
+      if (atualizacao.telefone) {
+        if (!/^\d{10,11}$/.test(atualizacao.telefone)) {
+          throw new Error(
+            "Telefone deve conter 10 ou 11 dígitos numéricos (com DDD).",
+          );
+        } else if (/\D/.test(atualizacao.telefone)) {
+          throw new Error("Telefone deve conter apenas dígitos numéricos.");
+        } else if (
+          atualizacao.telefone.length < 10 ||
+          atualizacao.telefone.length > 11
+        ) {
+          throw new Error("Telefone deve conter 10 ou 11 dígitos.");
+        }
       }
 
       //validacao convenio_medico
-      if (!atualizacao.convenio_medico) {
-        throw new Error("Convênio médico é obrigatório.");
-      } else if (atualizacao.convenio_medico.length < 3) {
-        throw new Error(
-          "O convênio médico deve conter pelo menos 3 caracteres.",
-        );
-      } else if (atualizacao.convenio_medico.length > 50) {
-        throw new Error(
-          "O convênio médico deve conter no máximo 50 caracteres.",
-        );
+      if (atualizacao.convenio_medico) {
+        if (atualizacao.convenio_medico.length < 3) {
+          throw new Error(
+            "O convênio médico deve conter pelo menos 3 caracteres.",
+          );
+        } else if (atualizacao.convenio_medico.length > 50) {
+          throw new Error(
+            "O convênio médico deve conter no máximo 50 caracteres.",
+          );
+        }
       }
 
       //validacao plano_convenio
-      if (!atualizacao.plano_convenio) {
-        throw new Error("Plano de convênio é obrigatório.");
-      } else if (atualizacao.plano_convenio.length < 3) {
-        throw new Error(
-          "O plano de convênio deve conter pelo menos 3 caracteres.",
-        );
-      } else if (atualizacao.plano_convenio.length > 50) {
-        throw new Error(
-          "O plano de convênio deve conter no máximo 50 caracteres.",
-        );
+      if (atualizacao.plano_convenio) {
+        if (atualizacao.plano_convenio.length < 3) {
+          throw new Error(
+            "O plano de convênio deve conter pelo menos 3 caracteres.",
+          );
+        } else if (atualizacao.plano_convenio.length > 50) {
+          throw new Error(
+            "O plano de convênio deve conter no máximo 50 caracteres.",
+          );
+        }
       }
 
       //validacao tipo_sanguineo
-      if (!atualizacao.tipo_sanguineo) {
-        throw new Error("Tipo sanguíneo é obrigatório.");
-      } else if (
-        !["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].includes(
-          atualizacao.tipo_sanguineo,
-        )
-      ) {
-        throw new Error(
-          "Tipo sanguíneo deve ser um dos seguintes: A+, A-, B+, B-, AB+, AB-, O+ ou O-.",
-        );
+      if (atualizacao.tipo_sanguineo) {
+        if (
+          !["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].includes(
+            atualizacao.tipo_sanguineo,
+          )
+        ) {
+          throw new Error(
+            "Tipo sanguíneo deve ser um dos seguintes: A+, A-, B+, B-, AB+, AB-, O+ ou O-.",
+          );
+        }
       }
-
       //Validação do email
-      if (!atualizacao.email) {
-        throw new Error("Email é obrigatório.");
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(atualizacao.email)) {
-        throw new Error("Email deve ser um endereço de email válido.");
-      } else if (atualizacao.email.length > 255) {
-        throw new Error("Email deve conter no máximo 255 caracteres.");
-      }
+
       if (atualizacao.email) {
-        const emailExistente = await Paciente.findOne({
-          where: { email: atualizacao.email },
-        });
-        if (emailExistente && emailExistente.id !== id) {
-          throw new Error("Email já cadastrado por outro paciente.");
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(atualizacao.email)) {
+          throw new Error("Email deve ser um endereço de email válido.");
+        } else if (atualizacao.email.length > 255) {
+          throw new Error("Email deve conter no máximo 255 caracteres.");
+        }
+        if (atualizacao.email) {
+          const emailExistente = await Paciente.findOne({
+            where: { email: atualizacao.email },
+          });
+          if (emailExistente && emailExistente.id !== id) {
+            throw new Error("Email já cadastrado por outro paciente.");
+          }
         }
       }
 
       //Validação da senha
-      if (!senha) {
-        throw new Error("Senha é obrigatória.");
-      } else if (senha.length < 6) {
-        throw new Error("Senha deve conter no mínimo 6 caracteres.");
-      } else if (senha.length > 50) {
-        throw new Error("Senha deve conter no máximo 50 caracteres.");
-      } else if (!/[A-Z]/.test(senha)) {
-        throw new Error("Senha deve conter pelo menos uma letra maiúscula.");
-      } else if (!/[a-z]/.test(senha)) {
-        throw new Error("Senha deve conter pelo menos uma letra minúscula.");
-      } else if (!/\d/.test(senha)) {
-        throw new Error("Senha deve conter pelo menos um número.");
-      } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
-        throw new Error("Senha deve conter pelo menos um caractere especial.");
-      }
       if (atualizacao.senha) {
-        const hashSenha = await bcrypt.hash(atualizacao.senha, 10);
-        atualizacao.senha = hashSenha;
+        if (atualizacao.senha.length < 6) {
+          throw new Error("Senha deve conter no mínimo 6 caracteres.");
+        } else if (atualizacao.senha && atualizacao.senha.length > 50) {
+          throw new Error("Senha deve conter no máximo 50 caracteres.");
+        } else if (atualizacao.senha && !/[A-Z]/.test(atualizacao.senha)) {
+          throw new Error("Senha deve conter pelo menos uma letra maiúscula.");
+        } else if (atualizacao.senha && !/[a-z]/.test(atualizacao.senha)) {
+          throw new Error("Senha deve conter pelo menos uma letra minúscula.");
+        } else if (atualizacao.senha && !/\d/.test(atualizacao.senha)) {
+          throw new Error("Senha deve conter pelo menos um número.");
+        } else if (
+          atualizacao.senha &&
+          !/[!@#$%^&*(),.?":{}|<>]/.test(atualizacao.senha)
+        ) {
+          throw new Error(
+            "Senha deve conter pelo menos um caractere especial.",
+          );
+        }
+        if (atualizacao.senha) {
+          const hashSenha = await bcrypt.hash(atualizacao.senha, 10);
+          atualizacao.senha = hashSenha;
+        }
       }
 
       await Paciente.update(atualizacao, { where: { id } });
@@ -497,6 +504,7 @@ const PacientesService = {
         attributes: { exclude: ["senha"] },
       });
     } catch (error) {
+      console.log(error);
       throw new Error(error.message || "Erro ao atualizar paciente.");
     }
   },
@@ -505,7 +513,7 @@ const PacientesService = {
     try {
       const pacientesDeletado = await Paciente.findByPk(id);
       if (!pacientesDeletado) {
-        throw new Error("Pacientes não encontrado.");
+        throw new Error("Paciente não encontrado.");
       }
 
       /* await Agendamento.destroy({
@@ -513,7 +521,7 @@ const PacientesService = {
       }); */
 
       await pacientesDeletado.destroy();
-      return { msg: "Pacientes removido com sucesso." };
+      return { msg: "Paciente removido com sucesso." };
     } catch (error) {
       throw error;
     }

@@ -60,8 +60,8 @@ const pacientesController = {
     try {
       const { id } = req.params;
       const atualizacao = req.body;
-      const atualizado = await PacientesService.update(id, atualizacao);
-      res.status(200).json(atualizado);
+      await PacientesService.update(id, atualizacao);
+      res.status(200).json({ msg: "Paciente atualizado com sucesso!" });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
     }

@@ -66,7 +66,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "paciente_id",
     });
     Paciente.hasMany(models.Dependente, { foreignKey: "paciente_id" });
-    Paciente.hasMany(models.AgendamentoTitular, { foreignKey: "paciente_id" });
     Paciente.hasMany(models.Prontuario, { foreignKey: "paciente_id" });
     Paciente.hasMany(models.ProntuarioDependente, {
       foreignKey: "paciente_id",

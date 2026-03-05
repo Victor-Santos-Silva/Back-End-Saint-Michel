@@ -27,7 +27,7 @@ const agendamentoController = {
 
   update: async (req, res) => {
     try {
-      const update = agendamentoDependenteSerivce.update(req.params);
+      const update = agendamentoDependenteSerivce.update(req.params.id);
       res.status(200).json({
         mgs: "Medico atualizado com sucesso.",
         update,
@@ -39,7 +39,7 @@ const agendamentoController = {
 
   getById: async (req, res) => {
     try {
-      const result = agendamentoDependenteSerivce.getById(req.params);
+      const result = agendamentoDependenteSerivce.getById(req.params.id);
       res.status(200).json({
         AgendamentoDependente: result,
       });
@@ -50,7 +50,7 @@ const agendamentoController = {
 
   delete: async (req, res) => {
     try {
-      const result = agendamentoDependenteSerivce.delet(req.params);
+      const result = agendamentoDependenteSerivce.delete(req.params.id);
       res
         .status(200)
         .json({ message: "Agendamento deletado com sucesso!", result });

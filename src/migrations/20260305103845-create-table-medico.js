@@ -4,12 +4,18 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("medico", {
+      id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+      },
       nomeCompleto: {
         type: Sequelize.STRING,
         allowNull: false,
       },
       dataNascimento: {
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       cpf: {

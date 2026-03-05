@@ -14,6 +14,12 @@ module.exports = {
             key: "id",
           },
         },
+        id: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+        },
         nomeCompleto: {
           type: Sequelize.STRING,
           allowNull: false,

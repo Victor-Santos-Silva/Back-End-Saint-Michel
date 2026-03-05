@@ -2,11 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const AgendamentoDependente = sequelize.define(
     "AgendamentoDependente",
     {
-      usuario_id: {
+      paciente_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "usuarios",
+          model: "pacientes",
           key: "id",
         },
       },
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "medicos",
+          model: "medico",
           key: "id",
         },
       },
